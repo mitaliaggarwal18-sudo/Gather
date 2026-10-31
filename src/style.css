@@ -608,26 +608,36 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
   .ingredient-table td { font-size:9px;padding:11px 6px; }
 }
 
-/* Recipe video and fibre estimate indicators */
-.recipe-video { margin: 18px 0; }
-.video-frame { position:relative;width:100%;aspect-ratio:16/9;margin-top:14px;overflow:hidden;border-radius:12px;background:#202820; }
-.video-frame iframe { position:absolute;inset:0;width:100%;height:100%;border:0; }
-.estimated-tag { display:inline-block;margin-left:5px;padding:3px 6px;border-radius:5px;background:#fff0dc;color:#bd7627;font-size:9px;font-weight:700;white-space:nowrap; }
-.estimated-value { color:#bd7627 !important; }
-.verified-tag { display:inline-block;margin-left:5px;padding:3px 6px;border-radius:5px;background:#e8f0e5;color:#52734d;font-size:9px;font-weight:700;white-space:nowrap; }
-.quantity-assumed { display:flex;align-items:center;gap:4px;font-size:9px;color:#bd7627;white-space:nowrap; }
-.quantity-assumed input { width:auto; }
-.ingredient-table th,.ingredient-table td { vertical-align:middle; }
-@media(max-width:700px){.quantity-assumed{font-size:8px;}}
-
-/* Layout adjustments for the additional fibre metric and quantity flag */
-.macrostrip { grid-template-columns:repeat(5,minmax(0,1fr)); }
-.ingredient-edit { grid-template-columns:minmax(120px,1.6fr) 52px 45px 55px 55px 62px 55px 72px 82px 34px 27px; }
-.ingredient-edit .estimated-tag,.ingredient-edit .verified-tag { margin:0; }
-.formsection { min-width:0; }
-@media(max-width:640px){
- .macrostrip { grid-template-columns:1fr 1fr; }
- .ingredient-edit { min-width:700px; }
- .ingredient-edit input:nth-of-type(n+5) { display:block; }
- .ingredient-photo-upload { display:grid; }
-}
+/* Gather meal basket, recipe ratings, fibre estimates and video */
+.recipecard { position:relative; display:block; width:100%; padding:0; overflow:hidden; text-align:left; }
+.card-open { display:block; width:100%; border:0; padding:0; background:transparent; color:inherit; text-align:left; }
+.tile-add { position:absolute; right:14px; bottom:14px; width:38px; height:38px; border-radius:10px; border:1px solid #dce6d5; background:#e9f0e4; color:#526b50; display:grid; place-items:center; z-index:2; }
+.tile-add:hover { background:#dce9d5; transform:scale(1.05); }
+.cardfoot { padding-right:45px; }
+.card-rating { display:flex; align-items:center; gap:7px; margin-top:9px; color:#71836a; font-size:10px; }
+.card-rating b { color:#526b50; font-size:12px; }
+.meal-cart { position:fixed; z-index:40; bottom:0; left:236px; right:0; padding:12px 28px; pointer-events:none; }
+.meal-cart-bar,.meal-cart-drawer { pointer-events:auto; }
+.meal-cart-bar { width:100%; max-width:850px; margin:auto; background:#526b50; color:white; border:0; border-radius:13px; padding:14px 20px; display:flex; justify-content:space-between; align-items:center; text-align:left; box-shadow:0 5px 25px #263b2640; }
+.meal-cart-bar b,.meal-cart-bar small { display:block; }
+.meal-cart-bar b { font-size:13px; }
+.meal-cart-bar small { font-size:10px; margin-top:4px; color:#e1eadc; }
+.meal-cart-drawer { width:100%; max-width:850px; max-height:55vh; overflow:auto; margin:0 auto 10px; padding:20px; background:#fffefa; border:1px solid #e8e9df; border-radius:15px; box-shadow:0 5px 30px #263b2620; }
+.cart-totals { display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; padding:15px; margin-top:14px; background:#eef2e9; border-radius:10px; }
+.cart-totals b,.cart-totals small { display:block; }
+.cart-totals b { color:#526b50; font-size:14px; }
+.cart-totals small { color:#82907c; font-size:9px; margin-top:4px; }
+.estimated-tag { display:inline-block; margin-left:4px; padding:3px 6px; border-radius:5px; background:#fff0dc; color:#bd7627; font-size:9px; font-weight:700; white-space:nowrap; }
+.recipe-video { margin:18px 0; }
+.video-frame { position:relative; width:100%; aspect-ratio:16/9; margin-top:14px; overflow:hidden; border-radius:12px; background:#202820; }
+.video-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+.recipe-rating { margin:16px 0; }
+.rating-heading { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+.rating-heading h2 { font:600 21px 'Playfair Display',serif; margin:7px 0; }
+.rating-note { font-size:9px; color:#9a8a6b; }
+.rating-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:9px; margin:12px 0; }
+.rating-grid div { background:#f3f5ee; padding:10px; border-radius:8px; }
+.rating-grid span,.rating-grid b { display:block; font-size:10px; }
+.rating-grid b { color:#526b50; margin-top:5px; }
+@media(max-width:850px) { .meal-cart { left:0; padding:10px 14px; } .rating-grid { grid-template-columns:repeat(2,1fr); } .meal-cart-drawer { max-height:60vh; } }
+@media(max-width:600px) { .tile-add { right:9px; bottom:9px; width:32px; height:32px; } .cardfoot { padding-right:38px; } .cart-totals { display:grid; grid-template-columns:1fr 1fr; } }
