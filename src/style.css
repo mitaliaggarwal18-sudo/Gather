@@ -607,3 +607,27 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
   .ingredient-table th { font-size:8px;padding:9px 6px; }
   .ingredient-table td { font-size:9px;padding:11px 6px; }
 }
+
+/* Recipe video and fibre estimate indicators */
+.recipe-video { margin: 18px 0; }
+.video-frame { position:relative;width:100%;aspect-ratio:16/9;margin-top:14px;overflow:hidden;border-radius:12px;background:#202820; }
+.video-frame iframe { position:absolute;inset:0;width:100%;height:100%;border:0; }
+.estimated-tag { display:inline-block;margin-left:5px;padding:3px 6px;border-radius:5px;background:#fff0dc;color:#bd7627;font-size:9px;font-weight:700;white-space:nowrap; }
+.estimated-value { color:#bd7627 !important; }
+.verified-tag { display:inline-block;margin-left:5px;padding:3px 6px;border-radius:5px;background:#e8f0e5;color:#52734d;font-size:9px;font-weight:700;white-space:nowrap; }
+.quantity-assumed { display:flex;align-items:center;gap:4px;font-size:9px;color:#bd7627;white-space:nowrap; }
+.quantity-assumed input { width:auto; }
+.ingredient-table th,.ingredient-table td { vertical-align:middle; }
+@media(max-width:700px){.quantity-assumed{font-size:8px;}}
+
+/* Layout adjustments for the additional fibre metric and quantity flag */
+.macrostrip { grid-template-columns:repeat(5,minmax(0,1fr)); }
+.ingredient-edit { grid-template-columns:minmax(120px,1.6fr) 52px 45px 55px 55px 62px 55px 72px 82px 34px 27px; }
+.ingredient-edit .estimated-tag,.ingredient-edit .verified-tag { margin:0; }
+.formsection { min-width:0; }
+@media(max-width:640px){
+ .macrostrip { grid-template-columns:1fr 1fr; }
+ .ingredient-edit { min-width:700px; }
+ .ingredient-edit input:nth-of-type(n+5) { display:block; }
+ .ingredient-photo-upload { display:grid; }
+}
