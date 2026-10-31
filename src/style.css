@@ -1,4 +1,3 @@
-
 /* Single ingredient row with quantity and nutrition columns */
 .ingredient-table-wrap{width:100%;overflow-x:auto;margin-top:20px}
 .ingredient-table{width:100%;border-collapse:collapse;min-width:510px;text-align:left}
@@ -38,3 +37,36 @@
 .recipe-workspace .detailhero{margin-top:0}
 @media(max-width:1100px){.recipe-workspace.with-builder,.recipe-workspace.pane-collapsed.with-builder{grid-template-columns:175px minmax(0,1fr)}.inline-meal{grid-column:2;position:static;max-height:none}.recipe-workspace.pane-collapsed.with-builder{grid-template-columns:48px minmax(0,1fr)}}
 @media(max-width:640px){.toolbar-actions{gap:5px}.toolbar-actions .softbtn,.toolbar-actions .primary{font-size:9px;padding:9px}.recipe-workspace,.recipe-workspace.with-builder,.recipe-workspace.pane-collapsed,.recipe-workspace.pane-collapsed.with-builder{grid-template-columns:1fr;gap:10px}.recipe-rail{position:static;max-height:none}.recipe-rail .rail-list{max-height:145px;overflow:auto}.pane-collapsed .recipe-rail{width:100%}.pane-collapsed .rail-toggle{justify-content:flex-start}.inline-meal{grid-column:1;position:static;max-height:none}.workspace-toolbar{flex-wrap:wrap}.builder-toggle{font-size:9px;padding:9px}}
+
+/* Visual Cook Mode: photo-led, low-reading cooking guidance */
+.detailactions{flex-wrap:wrap}
+.step-thumb{display:block;width:100%;max-height:150px;object-fit:cover;border-radius:10px;margin:8px 0 0}
+.visual-step-edit{align-items:flex-start}
+.step-edit-fields{display:grid;grid-template-columns:minmax(0,1fr) 130px;gap:10px;flex:1;min-width:0}
+.photo-upload{height:92px;border:1px dashed #b9c5b2;border-radius:10px;background:#f6f7f1;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#60785b;font-size:11px;font-weight:700;cursor:pointer;text-align:center}
+.photo-upload input{display:none}
+.photo-upload img{width:100%;height:100%;object-fit:cover}
+.cookback{z-index:30;overflow:auto;padding:16px}
+.cookmodal{width:min(760px,100%);max-height:calc(100vh - 32px);overflow:auto;background:#fffefa;border-radius:20px;padding:22px;box-shadow:0 24px 80px #17201644}
+.cookhead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.cookhead h2{font-size:25px;margin:5px 0 16px;color:#344333}
+.cookingredients{background:#f3f5ee;border-radius:14px;padding:14px;margin-bottom:16px}
+.cookingredientgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:9px;margin-top:10px}
+.cookingredient{background:white;border-radius:10px;padding:10px;text-align:center;display:flex;flex-direction:column;gap:4px;min-width:0}
+.ingredient-symbol{font-size:29px}
+.cookingredient strong{font-size:14px;color:#40523d}
+.cookingredient small{font-size:10px;color:#788174;line-height:1.3}
+.cooksteps{display:grid;gap:15px}
+.cookstep{position:relative;border:1px solid #e9e9df;border-radius:14px;overflow:hidden;background:white}
+.cookstep-number{position:absolute;z-index:1;top:10px;left:10px;width:34px;height:34px;border-radius:50%;background:#405a40;color:white;display:grid;place-items:center;font-weight:800;font-size:16px}
+.cookstep>img{width:100%;max-height:360px;object-fit:cover;display:block}
+.cook-placeholder{height:210px;background:linear-gradient(135deg,#edf1e8,#e5eadd);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#65755f}
+.cook-placeholder span{font-size:76px}
+.cook-placeholder small{font-size:11px}
+.cookstep-caption{padding:12px 15px;font-size:14px;font-weight:650;color:#485644}
+.cookfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:16px;position:sticky;bottom:0;background:#fffefa;padding-top:10px}
+@media(max-width:600px){.cookmodal{padding:14px;border-radius:15px}.step-edit-fields{grid-template-columns:1fr}.photo-upload{height:110px}.cookstep>img{max-height:260px}.cook-placeholder{height:180px}.cookfoot{flex-wrap:wrap}.cookfoot button{flex:1}}
+.ingredient-photo-upload{width:34px;height:34px;border:1px dashed #b9c5b2;border-radius:7px;display:grid;place-items:center;overflow:hidden;cursor:pointer;background:#f5f6f0}
+.ingredient-photo-upload input{display:none}
+.ingredient-photo-upload img{width:100%;height:100%;object-fit:cover}
+.cookingredient-photo{width:64px;height:64px;object-fit:cover;border-radius:9px;align-self:center}
