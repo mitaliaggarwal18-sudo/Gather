@@ -737,3 +737,16 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 
 /* User-managed recipe cover photos */
 .cardphoto>img{width:100%;height:100%;object-fit:cover;display:block}.detailphoto{overflow:hidden}.detailphoto>img{width:100%;height:100%;object-fit:cover;display:block}.cover-edit-row{display:flex;gap:16px;align-items:center;margin-top:12px}.cover-edit-preview{width:150px;height:105px;flex:0 0 150px;border-radius:10px;background:#edf0e7;display:grid;place-items:center;overflow:hidden;font-size:42px}.cover-edit-preview img{width:100%;height:100%;object-fit:cover}.cover-file-button{display:inline-flex!important;flex-direction:row!important;align-items:center;gap:7px;background:#eef2e9;border:1px solid #dce5d6;border-radius:8px;padding:9px 12px;cursor:pointer;color:#53694e!important;font-size:11px!important}.cover-file-button input{display:none}.cover-edit-section .hint{margin:5px 0 10px}@media(max-width:600px){.cover-edit-row{align-items:flex-start;flex-direction:column}}
+
+/* Manual outside-food entry: keep fields aligned and consistent with Gather forms */
+.manual-food-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:18px 0 10px;color:var(--ink,#344333);font-size:14px}
+.manual-food-panel{margin:14px 0 20px;padding:20px;background:#f8f9f4;border:1px solid #e5e9df;border-radius:14px}
+.manual-food-panel h3{margin:0 0 6px;font:600 20px 'Playfair Display',serif;color:#344333}
+.manual-food-panel>.hint{margin:0 0 16px;line-height:1.55;color:#828c7b;font-size:12px}
+.manual-food-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px;margin-bottom:16px}
+.manual-food-grid label{display:flex;flex-direction:column;align-items:stretch;gap:6px;min-width:0;color:#687963;font-size:12px;font-weight:700;line-height:1.35}
+.manual-food-grid label input{display:block;box-sizing:border-box;width:100%;min-width:0;height:42px;padding:10px 12px;border:1px solid #dfe5d9;border-radius:8px;background:#fffefa;color:#344333;font:400 14px inherit;outline:none}
+.manual-food-grid label input:focus{border-color:#81977b;box-shadow:0 0 0 3px #81977b20}
+.manual-food-grid .manual-food-notes{grid-column:1/-1}
+.manual-food-panel>.primary{margin-top:2px}
+@media(max-width:640px){.manual-food-panel{padding:14px}.manual-food-grid{grid-template-columns:minmax(0,1fr);gap:12px}.manual-food-grid .manual-food-notes{grid-column:auto}.manual-food-toggle{align-items:flex-start;flex-direction:column}}
