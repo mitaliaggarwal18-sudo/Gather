@@ -691,3 +691,41 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 }
 
 .person-cart-section{padding:12px 0 15px;border-bottom:1px solid #e9eadf}.person-cart-heading{display:flex;justify-content:space-between;align-items:center;margin:0 0 8px;padding:8px 10px;background:#eef2e9;border-radius:8px;color:#526b50}.person-cart-heading b{font-size:13px}.person-cart-heading span{font-size:10px}.cart-qty{width:48px;padding:4px 2px;text-align:center;border:1px solid #e5e8de;border-radius:5px;font-size:11px}.remove-food{border:0;background:transparent;color:#a47770}.add-food-inline{display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:7px 10px;border:1px dashed #aebaa5;border-radius:7px;background:#fbfcf8;color:#526b50;font-size:10px}.outside-food-cta{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;margin-top:12px;border-top:1px solid #eceee5}.outside-food-cta b,.outside-food-cta small{display:block}.outside-food-cta b{font-size:12px;color:#526b50}.outside-food-cta small{font-size:10px;color:#92998d;margin-top:4px}.person-picker-modal{max-width:420px}.person-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}.person-choice-grid button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px 10px;border:1px solid #e5e8de;border-radius:12px;background:#fbfcf8;color:#526b50}.person-choice-grid button span{font-size:28px}.person-choice-grid button b{font-size:14px}.person-choice-grid button small{font-size:10px;color:#92998d}.person-picker-modal>.softbtn{width:100%;justify-content:center}
+
+
+/* Independent household meal ribbons */
+.tile-add-pair{position:absolute;right:10px;bottom:10px;z-index:3;display:flex;gap:5px}
+.tile-add-person{width:30px;height:30px;border:1px solid #dce6d5;border-radius:9px;background:#e9f0e4;color:#526b50;font-size:11px;font-weight:800;box-shadow:0 2px 7px #263b2612}
+.tile-add-person:hover{background:#dce9d5;transform:translateY(-1px)}
+.recipecard .cardfoot{padding-right:76px}
+.dual-meal-cart{position:fixed;z-index:40;bottom:0;left:236px;right:0;padding:10px 22px;display:grid;grid-template-columns:1fr 1fr;gap:10px;pointer-events:none}
+.dual-person{min-width:0;pointer-events:auto}
+.dual-ribbon{width:100%;min-height:58px;padding:10px 14px;border:0;border-radius:12px 12px 0 0;background:#526b50;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;box-shadow:0 4px 20px #263b2630}
+.dual-ribbon.active{background:#405a40}
+.dual-ribbon b,.dual-ribbon small{display:block}
+.dual-ribbon b{font-size:12px}
+.dual-ribbon small{font-size:9px;color:#e1eadc;margin-top:4px}
+.dual-ribbon>span:last-child{font-size:10px;white-space:nowrap}
+.dual-drawer{max-height:55vh;overflow:auto;margin-bottom:8px;padding:15px;background:#fffefa;border:1px solid #e8e9df;border-radius:14px;box-shadow:0 5px 30px #263b2620}
+.dual-drawer .panelhead h2{font-size:22px;margin:4px 0}
+.dual-drawer .mealitem{gap:8px}
+.food-search-modal{max-width:700px}
+.food-search-row{display:flex;gap:8px;margin:14px 0}
+.food-search-row input{flex:1;min-width:0;border:1px solid #e5e8de;border-radius:8px;padding:11px;background:white}
+.food-result{width:100%;display:flex;gap:12px;align-items:flex-start;padding:11px;margin:7px 0;text-align:left;border:1px solid #e8e9df;border-radius:10px;background:#fff}
+.food-result.selected{border-color:#8fa889;background:#f1f5ed}
+.food-result img{width:54px;height:54px;object-fit:contain;border-radius:7px;background:#f7f7f1}
+.food-result span{min-width:0}
+.food-result b,.food-result small{display:block}
+.food-result b{font-size:12px;color:#40523d}
+.food-result small{font-size:9px;color:#84907e;margin-top:4px;line-height:1.4}
+.food-error{padding:10px;background:#fff3e5;border-radius:8px;color:#9b6428;font-size:11px}
+.selected-food-panel{padding:14px;margin-top:12px;border:1px solid #e5e8de;border-radius:12px;background:#f7f8f3}
+.selected-food-panel>b{font-size:13px;color:#40523d}
+.selected-food-panel p{font-size:10px;color:#788174;line-height:1.5}
+.food-macros{display:flex;gap:13px;flex-wrap:wrap;margin:10px 0;color:#526b50;font-size:11px;font-weight:700}
+.food-macros small{width:100%;font-size:9px;color:#879181;font-weight:400}
+.quantity-label{display:flex;flex-direction:column;gap:6px;max-width:220px;font-size:10px;font-weight:700;color:#75816f;margin:12px 0}
+.quantity-label input{padding:9px;border:1px solid #e5e8de;border-radius:7px;background:#fff}
+@media(max-width:850px){.dual-meal-cart{left:0;padding:8px 10px;gap:7px}.dual-ribbon{padding:9px 10px}.dual-ribbon small{font-size:8px}.dual-drawer{max-height:58vh}}
+@media(max-width:600px){.dual-meal-cart{grid-template-columns:1fr 1fr;padding:6px 7px;gap:6px}.dual-ribbon{min-height:54px}.dual-ribbon b{font-size:10px}.dual-ribbon small{font-size:7px}.tile-add-person{width:26px;height:26px}.food-search-row{flex-direction:column}.food-result img{width:42px;height:42px}}
