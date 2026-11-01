@@ -756,3 +756,5 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .cover-drag-preview{touch-action:none;cursor:grab;user-select:none}.cover-drag-preview:active{cursor:grabbing}.cover-drag-preview img{pointer-events:none;user-select:none}.cover-drag-hint{margin:10px 0;color:#7d8978;font-size:11px;line-height:1.5}
 
 .cover-drag-preview{position:relative;overflow:hidden;touch-action:none;cursor:grab;user-select:none}.cover-drag-preview:active{cursor:grabbing}.cover-drag-preview img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;transform-origin:center;pointer-events:none;user-select:none}
+
+.cover-zoom-control{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;margin:12px 0;color:var(--ink)}.cover-zoom-control input{grid-column:1/-1;width:100%;accent-color:var(--sage)}.cover-zoom-control span{grid-column:1/-1;display:flex;justify-content:space-between;color:var(--muted)}
