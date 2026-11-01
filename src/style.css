@@ -188,10 +188,12 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 }
 .recipecard:hover { transform:translateY(-3px);box-shadow:var(--shadow); }
 .cardphoto {
-  height:128px;position:relative;display:grid;place-items:center;
+  height:190px;position:relative;display:grid;place-items:center;
   background:#edf0e7;overflow:hidden;
 }
 .cardphoto span { font-size:54px;filter:drop-shadow(0 7px 5px #00000012); }
+.cardphoto img{width:100%;height:100%;object-fit:contain;display:block;padding:6px;box-sizing:border-box;}
+
 .cardphoto small {
   position:absolute;top:11px;left:11px;
   background:#fffefaed;border-radius:20px;padding:5px 9px;
