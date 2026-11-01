@@ -252,7 +252,7 @@ function App(){
    if(!selectedFood)return;
    const qty=Math.max(.01,Number(foodQuantity)||1), baseG=selectedFood.servingG>0?selectedFood.servingG:100, factor=baseG/100*qty;
    const p=selectedFood.per100;
-   setOutsideFoods(old=>[...old,{id:"food"+Date.now(),name:selectedFood.name+(selectedFood.brand?" · "+selectedFood.brand:""),unit:selectedFood.servingG>0?(selectedFood.servingSize||selectedFood.quantity||"serving"):"100 g",kcal:p.kcal*factor,protein:p.protein*factor,carbs:p.carbs*factor,fiber:p.fiber*factor,count:1,member:pendingFoodMember,ingredients:selectedFood.ingredients,source:selectedFood.source,sourceUrl:selectedFood.url,baseQuantity:qty}]);
+   setOutsideFoods(old=>[...old,{id:"food"+Date.now(),name:selectedFood.name+(selectedFood.brand?" · "+selectedFood.brand:""),unit:selectedFood.servingG>0?(selectedFood.servingSize||selectedFood.quantity||"serving"):"100 g",kcal:p.kcal*baseG/100,protein:p.protein*baseG/100,carbs:p.carbs*baseG/100,fiber:p.fiber*baseG/100,count:qty,member:pendingFoodMember,ingredients:selectedFood.ingredients,source:selectedFood.source,sourceUrl:selectedFood.url,baseQuantity:qty}]);
    setShowOutsideFood(false);setExpandedPerson(pendingFoodMember);setFoodQuery("");setFoodResults([]);setSelectedFood(null);setFoodQuantity("1");notify("Added to "+pendingFoodMember+"'s meal");
  }
  function startNew(){setEditing(null);setForm({id:"r"+Date.now(),name:"",category:"Dinner",servings:1,time:20,videoUrl:"",ingredients:[["",0,"g",0,0,0,0]],steps:[""],stepImages:[""]});setShowForm(true)}
