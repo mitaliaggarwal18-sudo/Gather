@@ -641,3 +641,23 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .rating-grid b { color:#526b50; margin-top:5px; }
 @media(max-width:850px) { .meal-cart { left:0; padding:10px 14px; } .rating-grid { grid-template-columns:repeat(2,1fr); } .meal-cart-drawer { max-height:60vh; } }
 @media(max-width:600px) { .tile-add { right:9px; bottom:9px; width:32px; height:32px; } .cardfoot { padding-right:38px; } .cart-totals { display:grid; grid-template-columns:1fr 1fr; } }
+
+
+/* Built-in ingredient nutrition database */
+.ingredient-edit {
+  grid-template-columns:minmax(150px,1.5fr) minmax(145px,1.2fr) 58px 55px 58px 58px 65px 65px 36px 27px;
+}
+.ingredient-db-select {
+  width:100%;min-width:0;border:1px solid #e5e8de;border-radius:7px;
+  background:#f7f8f3;padding:8px 5px;font-size:9px;color:#526b50;
+}
+.nutrition-source-tag {
+  grid-column:1/-2;
+  color:#b8792e;background:#fff2df;border-radius:5px;
+  padding:4px 7px;font-size:9px;width:max-content;max-width:100%;
+}
+@media(max-width:640px) {
+  .ingredient-edit { grid-template-columns:minmax(120px,1fr) minmax(130px,1fr) 55px 48px; }
+  .ingredient-db-select { grid-column:1/-1; }
+  .nutrition-source-tag { grid-column:1/-1; }
+}
