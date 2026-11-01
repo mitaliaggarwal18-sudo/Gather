@@ -233,18 +233,34 @@ function App(){
    const q=foodQuery.trim();if(!q)return;
    setFoodLoading(true);setFoodError("");setFoodResults([]);setSelectedFood(null);
    try{
-     const url="https://world.openfoodfacts.org/cgi/search.pl?"+new URLSearchParams({search_terms:q,search_simple:"1",action:"process",json:"1",page_size:"12",fields:"code,product_name,brands,quantity,serving_size,serving_quantity,ingredients_text,nutriments,image_front_small_url,url"});
-     const res=await fetch(url,{headers:{"Accept":"application/json"}});
-     if(!res.ok)throw new Error("Food database is temporarily unavailable.");
-     const data=await res.json();
-     const items=(data.products||[]).map(p=>{
+     // Brand names are often indexed separately from product types in Open Food Facts.
+     // Try the entered phrase first, then a small set of useful brand/product variants.
+     const lower=q.toLowerCase();
+     const queries=[q];
+     if(lower.includes("wholetruth")||lower.includes("whole truth")){
+       queries.push("The Whole Truth", "Whole Truth protein bar");
+     }else{
+       const compact=q.replace(/\\s+/g," ").trim();
+       if(compact.split(" ").length>2)queries.push(compact.split(" ").slice(0,2).join(" "));
+     }
+     const uniqueQueries=[...new Set(queries.map(x=>x.trim()).filter(Boolean))];
+     const found=new Map();
+     for(const term of uniqueQueries){
+       const url="https://world.openfoodfacts.org/cgi/search.pl?"+new URLSearchParams({search_terms:term,search_simple:"1",action:"process",json:"1",page_size:"20",fields:"code,product_name,brands,quantity,serving_size,serving_quantity,ingredients_text,nutriments,image_front_small_url,url"});
+       const res=await fetch(url,{headers:{"Accept":"application/json"}});
+       if(!res.ok)throw new Error("Food database is temporarily unavailable.");
+       const data=await res.json();
+       (data.products||[]).forEach(p=>{const key=p.code||p.product_name;if(key&&!found.has(key))found.set(key,p)});
+       if(found.size>=8)break;
+     }
+     const items=[...found.values()].map(p=>{
        const n=p.nutriments||{}, per100={kcal:Number(n["energy-kcal_100g"]??(Number(n["energy_100g"]||0)/4.184))||0,protein:Number(n.proteins_100g)||0,carbs:Number(n.carbohydrates_100g)||0,fiber:Number(n.fiber_100g)||0};
        const has=per100.kcal>0||per100.protein>0||per100.carbs>0;
        const servingG=Number(p.serving_quantity)||0;
        return {id:p.code||p.product_name,name:p.product_name||p.brands||"Unnamed food",brand:p.brands||"",quantity:p.quantity||"",servingSize:p.serving_size||"",servingG,ingredients:p.ingredients_text||"",per100,has,image:p.image_front_small_url||"",source:"Open Food Facts",url:p.url||""};
      }).filter(x=>x.name&&x.has);
      setFoodResults(items);
-     if(!items.length)setFoodError("No matching item with usable nutrition was found. Try a more specific brand or product name.");
+     if(!items.length)setFoodError("No matching item with usable nutrition was found. Try “The Whole Truth” or scan the product barcode. Some products may not yet have nutrition data in Open Food Facts.");
    }catch(e){setFoodError(e.message||"Could not search food database.");}
    finally{setFoodLoading(false);}
  }
