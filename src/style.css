@@ -729,3 +729,8 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .quantity-label input{padding:9px;border:1px solid #e5e8de;border-radius:7px;background:#fff}
 @media(max-width:850px){.dual-meal-cart{left:0;padding:8px 10px;gap:7px}.dual-ribbon{padding:9px 10px}.dual-ribbon small{font-size:8px}.dual-drawer{max-height:58vh}}
 @media(max-width:600px){.dual-meal-cart{grid-template-columns:1fr 1fr;padding:6px 7px;gap:6px}.dual-ribbon{min-height:54px}.dual-ribbon b{font-size:10px}.dual-ribbon small{font-size:7px}.tile-add-person{width:26px;height:26px}.food-search-row{flex-direction:column}.food-result img{width:42px;height:42px}}
+
+
+/* Keep the food search dialog above the meal carts; align both household ribbons to the viewport bottom. */
+.dual-person{display:flex;flex-direction:column;justify-content:flex-end}
+.food-search-back{z-index:70}
