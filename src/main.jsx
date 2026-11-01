@@ -55,7 +55,7 @@ function gramsForIngredient(x) {
  return q;
 }
 const isFiberEstimated = x => x[8] !== "verified" || x[9] === true;
-const ingredientFiber = x => isFiberEstimated(x) ? gramsForIngredient(x)*estimatedFiberPer100g(x[0])/100 : (Number(x[6])||0);
+const ingredientFiber = x => x[8] === "database" ? (Number(x[6])||0) : (isFiberEstimated(x) ? gramsForIngredient(x)*estimatedFiberPer100g(x[0])/100 : (Number(x[6])||0));
 const nutrition = r => ({kcal:sum(r.ingredients,3), protein:sum(r.ingredients,4), carbs:sum(r.ingredients,5), fiber:r.ingredients.reduce((a,x)=>a+ingredientFiber(x),0)});
 const hasEstimatedFiber = r => r.ingredients.some(isFiberEstimated);
 const netCarbs = r => Math.max(0, nutrition(r).carbs - nutrition(r).fiber);
@@ -69,6 +69,77 @@ function recipeRating(r) {
  const ingredientScore=/vegetable|tomato|onion|capsicum|cabbage|peas|rajma|avocado|spinach|mushroom/.test(names)?8:6;
  const score=Math.round((proteinScore*.30+calorieScore*.25+fibreScore*.20+fatScore*.15+ingredientScore*.10)*10)/10;
  return {score, label:score>=8.5?"Excellent":score>=7?"Good":score>=5?"Average":"Needs improvement", parts:[["Protein adequacy",proteinScore],["Calorie efficiency",calorieScore],["Fibre adequacy",fibreScore],["Fat quality",fatScore],["Ingredient quality",ingredientScore]]};
+}
+// Built-in reference nutrition database: approximate values per 100 g edible portion.
+// Values are generic estimates, not brand-specific label data. Verify packaged foods against their labels.
+const INGREDIENT_DB = [
+ {id:"paneer",name:"Paneer",kcal:265,p:18.3,c:1.2,f:0.0},
+ {id:"tofu",name:"Tofu",kcal:144,p:17.3,c:2.8,f:2.3},
+ {id:"milk",name:"Whole milk",kcal:61,p:3.2,c:4.8,f:0},
+ {id:"curd",name:"Plain curd",kcal:61,p:3.5,c:4.7,f:0},
+ {id:"greek-yogurt",name:"Greek yoghurt, plain",kcal:97,p:9,c:3.9,f:0},
+ {id:"cheese",name:"Cheddar cheese",kcal:403,p:24.9,c:1.3,f:0},
+ {id:"mozzarella",name:"Mozzarella",kcal:280,p:28,c:3.1,f:0},
+ {id:"egg",name:"Whole egg",kcal:143,p:12.6,c:0.7,f:0},
+ {id:"egg-white",name:"Egg white",kcal:52,p:10.9,c:0.7,f:0},
+ {id:"rice-white-dry",name:"White rice, uncooked",kcal:365,p:7.1,c:80,f:1.3},
+ {id:"rice-white-cooked",name:"White rice, cooked",kcal:130,p:2.7,c:28.2,f:0.4},
+ {id:"brown-rice-cooked",name:"Brown rice, cooked",kcal:123,p:2.7,c:25.6,f:1.6},
+ {id:"atta",name:"Whole wheat atta",kcal:340,p:13.2,c:72,f:10.7},
+ {id:"maida",name:"Maida / all-purpose flour",kcal:364,p:10.3,c:76.3,f:2.7},
+ {id:"besan",name:"Besan",kcal:387,p:22.4,c:57.8,f:10.8},
+ {id:"oats",name:"Rolled oats",kcal:389,p:16.9,c:66.3,f:10.6},
+ {id:"pasta-dry",name:"Pasta, dry",kcal:371,p:13,c:74.7,f:3.2},
+ {id:"rajma-cooked",name:"Rajma, cooked",kcal:127,p:8.7,c:22.8,f:6.4},
+ {id:"chickpeas-cooked",name:"Chickpeas, cooked",kcal:164,p:8.9,c:27.4,f:7.6},
+ {id:"moong-dal-cooked",name:"Moong dal, cooked",kcal:105,p:7,c:19.2,f:7.6},
+ {id:"masoor-dal-cooked",name:"Masoor dal, cooked",kcal:116,p:9,c:20.1,f:7.9},
+ {id:"soya-chunks-dry",name:"Soya chunks, dry",kcal:345,p:52,c:33,f:13},
+ {id:"peas",name:"Green peas",kcal:81,p:5.4,c:14.5,f:5.1},
+ {id:"potato",name:"Potato",kcal:77,p:2,c:17.5,f:2.2},
+ {id:"sweet-potato",name:"Sweet potato",kcal:86,p:1.6,c:20.1,f:3},
+ {id:"onion",name:"Onion",kcal:40,p:1.1,c:9.3,f:1.7},
+ {id:"tomato",name:"Tomato",kcal:18,p:0.9,c:3.9,f:1.2},
+ {id:"capsicum",name:"Capsicum",kcal:31,p:1,c:6,f:2.1},
+ {id:"cucumber",name:"Cucumber",kcal:15,p:0.7,c:3.6,f:0.5},
+ {id:"carrot",name:"Carrot",kcal:41,p:0.9,c:9.6,f:2.8},
+ {id:"cabbage",name:"Cabbage",kcal:25,p:1.3,c:5.8,f:2.5},
+ {id:"spinach",name:"Spinach",kcal:23,p:2.9,c:3.6,f:2.2},
+ {id:"broccoli",name:"Broccoli",kcal:34,p:2.8,c:6.6,f:2.6},
+ {id:"mushroom",name:"Button mushrooms",kcal:22,p:3.1,c:3.3,f:1},
+ {id:"cauliflower",name:"Cauliflower",kcal:25,p:1.9,c:5,f:2},
+ {id:"avocado",name:"Avocado",kcal:160,p:2,c:8.5,f:6.7},
+ {id:"banana",name:"Banana",kcal:89,p:1.1,c:22.8,f:2.6},
+ {id:"apple",name:"Apple",kcal:52,p:0.3,c:13.8,f:2.4},
+ {id:"almonds",name:"Almonds",kcal:579,p:21.2,c:21.6,f:12.5},
+ {id:"cashews",name:"Cashews",kcal:553,p:18.2,c:30.2,f:3.3},
+ {id:"chia",name:"Chia seeds",kcal:486,p:16.5,c:42.1,f:34.4},
+ {id:"flax",name:"Flax seeds",kcal:534,p:18.3,c:28.9,f:27.3},
+ {id:"olive-oil",name:"Olive oil",kcal:884,p:0,c:0,f:0},
+ {id:"ghee",name:"Ghee",kcal:900,p:0,c:0,f:0},
+ {id:"sugar",name:"Sugar",kcal:387,p:0,c:100,f:0},
+ {id:"honey",name:"Honey",kcal:304,p:0.3,c:82.4,f:0},
+ {id:"bread-whole",name:"Whole wheat bread",kcal:247,p:13,c:41,f:7},
+ {id:"bread-white",name:"White bread",kcal:266,p:8.9,c:49,f:2.7}
+];
+function ingredientWeightGrams(qty, unit, ingredientName="") {
+ const q=Number(qty)||0, u=String(unit||"g").toLowerCase().trim(), name=ingredientName.toLowerCase();
+ if (["kg"].includes(u)) return q*1000;
+ if (["g","gram","grams"].includes(u)) return q;
+ if (["ml","millilitre","milliliter"].includes(u)) return q; // approximate density of 1 g/ml
+ if (["tsp","teaspoon"].includes(u)) return q*5;
+ if (["tbsp","tablespoon"].includes(u)) return q*15;
+ if (["cup","cups"].includes(u)) return q*150;
+ if (["clove","cloves"].includes(u)) return q*4;
+ if (["pcs","pc","piece","pieces"].includes(u)) return q*(/egg/.test(name)?50:/bread/.test(name)?30:30);
+ if (u==="medium") return q*100;
+ if (u==="large") return q*150;
+ if (u==="small") return q*50;
+ return q;
+}
+function dbNutritionForQuantity(entry, qty, unit) {
+ const grams=ingredientWeightGrams(qty,unit,entry.name), factor=grams/100;
+ return [entry.kcal*factor,entry.p*factor,entry.c*factor,entry.f*factor].map(v=>Math.round(v*100)/100);
 }
 const clone = x => JSON.parse(JSON.stringify(x));
 function getVideoEmbedUrl(url="") { try { const u=new URL(url); const host=u.hostname.replace("www.",""); if(host==="youtu.be") return `https://www.youtube.com/embed/${u.pathname.slice(1)}`; if(host.includes("youtube.com")){const id=u.searchParams.get("v")||u.pathname.match(/\/(?:shorts|embed)\/([^/?]+)/)?.[1];return id?`https://www.youtube.com/embed/${id}`:null;} if(host.includes("vimeo.com")){const id=u.pathname.split("/").filter(Boolean).pop();return id?`https://player.vimeo.com/video/${id}`:null;} return null;}catch{return null;} }
@@ -89,25 +160,49 @@ function App(){
  function startNew(){setEditing(null);setForm({id:"r"+Date.now(),name:"",category:"Dinner",servings:1,time:20,videoUrl:"",ingredients:[["",0,"g",0,0,0,0]],steps:[""],stepImages:[""]});setShowForm(true)}
  function startEdit(r){setEditing(r.id);setForm(clone(r));setShowForm(true)}
  function saveRecipe(){if(!form.name.trim()){notify("Please add a recipe name");return}const clean={...form,ingredients:form.ingredients.filter(x=>x[0].trim()),steps:form.steps.filter(x=>x.trim())};setRecipes(old=>editing?old.map(r=>r.id===editing?clean:r):[clean,...old]);setSelected(clean.id);setShowForm(false);setPage("Recipes");notify(editing?"Recipe updated":"Recipe saved")}
+ function applyIngredientDatabase(i, dbId) {
+   const entry=INGREDIENT_DB.find(item=>item.id===dbId);
+   if(!entry) return;
+   setForm(f=>({...f,ingredients:f.ingredients.map((x,k)=>{
+     if(k!==i) return x;
+     const next=[...x];
+     next[0]=entry.name;
+     next[10]=entry.id;
+     next[8]="database";
+     next[9]=false;
+     const vals=dbNutritionForQuantity(entry,next[1],next[2]);
+     next[3]=vals[0]; next[4]=vals[1]; next[5]=vals[2]; next[6]=vals[3];
+     return next;
+   })}));
+ }
  function updateIngredient(i,j,v){
    setForm(f=>({...f,ingredients:f.ingredients.map((x,k)=>{
      if(k!==i) return x;
      const next=[...x];
-     if(j===1){
-       const oldQty=Number(x[1])||0;
-       const newQty=Number(v)||0;
-       const ratio=oldQty>0?newQty/oldQty:0;
-       next[1]=newQty;
-       [3,4,5,6].forEach(col=>{next[col]=Math.round(((Number(x[col])||0)*ratio)*100)/100;});
-     } else if(j===0 || j===2) {
-       next[j]=v;
+     if(j===1 || j===2){
+       next[j]=j===1?(Number(v)||0):v;
+       const entry=INGREDIENT_DB.find(item=>item.id===next[10]);
+       if(entry){
+         const vals=dbNutritionForQuantity(entry,next[1],next[2]);
+         next[3]=vals[0]; next[4]=vals[1]; next[5]=vals[2]; next[6]=vals[3];
+       } else if(j===1){
+         const oldQty=Number(x[1])||0, newQty=Number(v)||0, ratio=oldQty>0?newQty/oldQty:0;
+         [3,4,5,6].forEach(col=>{next[col]=Math.round(((Number(x[col])||0)*ratio)*100)/100;});
+       }
+     } else if(j===0) {
+       next[0]=v;
+       const match=INGREDIENT_DB.find(item=>item.name.toLowerCase()===String(v).trim().toLowerCase());
+       if(match){next[10]=match.id;next[8]="database";const vals=dbNutritionForQuantity(match,next[1],next[2]);next[3]=vals[0];next[4]=vals[1];next[5]=vals[2];next[6]=vals[3];}
+       else {next[10]="";}
      } else {
        next[j]=Number(v)||0;
-       if(j===6){next[8]="verified";next[9]=false;}
+       if(j===6){next[8]="verified";next[9]=false;next[10]="";}
+       else if(j>=3 && j<=5){next[8]="custom";next[10]="";}
      }
      return next;
    })}));
  }
+
  function exportData(){const blob=new Blob([JSON.stringify({recipes,meal},null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="gather-recipe-backup.json";a.click();URL.revokeObjectURL(a.href)}
  function importData(e){const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const d=JSON.parse(reader.result);if(d.recipes){setRecipes(d.recipes);setMeal(d.meal||[]);notify("Backup restored")}else notify("That file is not a Gather backup")}catch{notify("Could not read backup")}};reader.readAsText(file)}
  const nav=[["Home",Home],["Recipes",BookOpen],["Nutrition",ChartNoAxesCombined]];
@@ -123,7 +218,7 @@ function App(){
   {page==="Nutrition"&&<section className="content"><div className="pageintro"><span className="eyebrow green">THE BIG PICTURE</span><h1>Know what's <em>on your plate.</em></h1><p>Explore the estimated nutrition in your saved recipes, per serving.</p></div><div className="nutritioncards">{recipes.map(r=>{let n=nutrition(r);return <div className="nutritioncard" key={r.id} onClick={()=>{setSelected(r.id);setPage("Recipes")}}><div><b>{r.name}</b><small>{r.servings} {r.servings===1?"serving":"servings"} per batch</small></div><strong>{Math.round(n.kcal/r.servings)} <small>kcal</small></strong><div className="nutribottom"><span>{(n.protein/r.servings).toFixed(1)}g protein</span><span>{(netCarbs(r)/r.servings).toFixed(1)}g net carbs</span></div></div>})}</div><p className="fineprint">Nutrition is estimated from typical ingredient values and saved quantities. For best accuracy, replace estimates with the nutrition label on your exact products. Net carbs are calculated as total carbohydrates minus dietary fibre. Fibre values need to be entered for accurate results.</p></section>}
      </main>
   {cookMode&&current&&<div className="modalback cookback"><div className="cookmodal"><div className="cookhead"><div><span className="eyebrow green">GATHER · VISUAL COOK MODE</span><h2>{current.name}</h2></div><button className="iconbtn" onClick={()=>setCookMode(false)}><X/></button></div><div className="cookingredients"><b>Ingredients · {current.servings} {current.servings===1?"serving":"servings"}</b><div className="cookingredientgrid">{current.ingredients.map((x,i)=><div className="cookingredient" key={i}>{x[7]?<img className="cookingredient-photo" src={x[7]} alt={x[0]}/>:<div className="ingredient-symbol">{["🥬","🥣","🧅","🫑","🧄","🧂","🫒","🧀"][i%8]}</div>}<strong>{x[1]} {x[2]}</strong><small>{x[0]}</small></div>)}</div></div><div className="cooksteps">{current.steps.map((step,i)=><div className="cookstep" key={i}><div className="cookstep-number">{i+1}</div>{current.stepImages?.[i]?<img src={current.stepImages[i]} alt={`Cooking step ${i+1}`}/>:<div className="cook-placeholder"><span>{["🧺","🔪","🥣","🍳","🍽️"][i%5]}</span><small>Add a real photo for this step using Edit recipe</small></div>}<div className="cookstep-caption">{step}</div></div>)}</div><div className="cookfoot"><button className="primary" onClick={()=>{setCookMode(false);startEdit(current)}}><Edit3 size={15}/> Add / update step photos</button><button className="softbtn" onClick={()=>setCookMode(false)}>Close</button></div></div></div>}
-  {showForm&&form&&<div className="modalback"><div className="modal"><div className="modalhead"><div><span className="eyebrow green">{editing?"UPDATE YOUR RECIPE":"ADD TO YOUR RECIPE BOOK"}</span><h2>{editing?"Edit recipe":"A new favourite"}</h2></div><button className="iconbtn" onClick={()=>setShowForm(false)}><X/></button></div><div className="formgrid"><label className="wide">Recipe name<input value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="e.g. Spinach and paneer bowl"/></label><label>Category<select value={form.category} onChange={e=>setForm({...form,category:e.target.value})}>{["Breakfast","Lunch","Dinner","Snack","Dessert"].map(x=><option>{x}</option>)}</select></label><label>Servings per batch<input type="number" min="1" value={form.servings} onChange={e=>setForm({...form,servings:Math.max(1,Number(e.target.value))})}/></label><label>Prep + cook time (min)<input type="number" min="1" value={form.time} onChange={e=>setForm({...form,time:Number(e.target.value)})}/></label></div><div className="formgrid"><label className="wide">Recipe video link (YouTube / Vimeo)<input type="url" value={form.videoUrl||""} onChange={e=>setForm({...form,videoUrl:e.target.value})} placeholder="Paste video URL"/></label></div><div className="formsection"><div className="formsectionhead"><h3>Ingredients & nutrition</h3><button className="linkbtn" onClick={()=>setForm({...form,ingredients:[...form.ingredients,["",0,"g",0,0,0,0]]})}><Plus size={15}/> Add ingredient</button></div><p className="hint">Enter nutrition for the full amount used in this batch. Changing quantity scales calories, protein, total carbs and fibre. Net carbs are calculated as total carbs minus fibre. Use the product label where available.</p>{form.ingredients.map((x,i)=><div className="ingredient-edit" key={i}><input className="ingname" placeholder="Ingredient" value={x[0]} onChange={e=>updateIngredient(i,0,e.target.value)}/><input aria-label="quantity" type="number" value={x[1]} onChange={e=>updateIngredient(i,1,e.target.value)}/><input aria-label="unit" value={x[2]} onChange={e=>updateIngredient(i,2,e.target.value)}/><input aria-label="calories" type="number" placeholder="kcal" value={x[3]} onChange={e=>updateIngredient(i,3,e.target.value)}/><input aria-label="protein" type="number" placeholder="P g" value={x[4]} onChange={e=>updateIngredient(i,4,e.target.value)}/><input aria-label="total carbs" type="number" placeholder="Total carbs g" value={x[5]} onChange={e=>updateIngredient(i,5,e.target.value)}/><input aria-label="fibre" type="number" placeholder="Fibre g" value={x[6]??0} onChange={e=>updateIngredient(i,6,e.target.value)}/><label className="ingredient-photo-upload" title="Add ingredient photo">{x[7]?<img src={x[7]} alt="Ingredient"/>:<span>📷</span>}<input type="file" accept="image/*" onChange={e=>{const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{const rows=form.ingredients.map((row,k)=>{if(k!==i)return row;const next=[...row];next[7]=reader.result;return next});setForm({...form,ingredients:rows})};reader.readAsDataURL(file)}}/></label><button className="removeing" onClick={()=>setForm({...form,ingredients:form.ingredients.filter((_,k)=>k!==i)})}><X size={15}/></button></div>)}</div><div className="formsection"><div className="formsectionhead"><h3>Cooking instructions</h3><button className="linkbtn" onClick={()=>setForm({...form,steps:[...form.steps,""],stepImages:[...(form.stepImages||[]),""]})}><Plus size={15}/> Add step</button></div>{form.steps.map((s,i)=><div className="step-edit visual-step-edit" key={i}><span>{i+1}</span><div className="step-edit-fields"><textarea value={s} placeholder="Short step description (optional for cook)..." onChange={e=>setForm({...form,steps:form.steps.map((v,k)=>k===i?e.target.value:v)})}/><label className="photo-upload">{form.stepImages?.[i]?<img src={form.stepImages[i]} alt={`Step ${i+1} preview`}/>:<span>＋ Add step photo</span>}<input type="file" accept="image/*" onChange={e=>{const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{const imgs=[...(form.stepImages||[])];imgs[i]=reader.result;setForm({...form,stepImages:imgs})};reader.readAsDataURL(file)}}/></label></div><button className="removeing" onClick={()=>setForm({...form,steps:form.steps.filter((_,k)=>k!==i),stepImages:(form.stepImages||[]).filter((_,k)=>k!==i)})}><X size={15}/></button></div>)}</div><div className="modalfoot"><button className="softbtn" onClick={()=>setShowForm(false)}>Cancel</button><button className="primary" onClick={saveRecipe}><Save size={16}/> Save recipe</button></div></div></div>}
+  {showForm&&form&&<div className="modalback"><div className="modal"><div className="modalhead"><div><span className="eyebrow green">{editing?"UPDATE YOUR RECIPE":"ADD TO YOUR RECIPE BOOK"}</span><h2>{editing?"Edit recipe":"A new favourite"}</h2></div><button className="iconbtn" onClick={()=>setShowForm(false)}><X/></button></div><div className="formgrid"><label className="wide">Recipe name<input value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="e.g. Spinach and paneer bowl"/></label><label>Category<select value={form.category} onChange={e=>setForm({...form,category:e.target.value})}>{["Breakfast","Lunch","Dinner","Snack","Dessert"].map(x=><option>{x}</option>)}</select></label><label>Servings per batch<input type="number" min="1" value={form.servings} onChange={e=>setForm({...form,servings:Math.max(1,Number(e.target.value))})}/></label><label>Prep + cook time (min)<input type="number" min="1" value={form.time} onChange={e=>setForm({...form,time:Number(e.target.value)})}/></label></div><div className="formgrid"><label className="wide">Recipe video link (YouTube / Vimeo)<input type="url" value={form.videoUrl||""} onChange={e=>setForm({...form,videoUrl:e.target.value})} placeholder="Paste video URL"/></label></div><div className="formsection"><div className="formsectionhead"><h3>Ingredients & nutrition</h3><button className="linkbtn" onClick={()=>setForm({...form,ingredients:[...form.ingredients,["",0,"g",0,0,0,0,"","estimated",false,""]]})}><Plus size={15}/> Add ingredient</button></div><p className="hint">Enter nutrition for the full amount used in this batch. Changing quantity scales calories, protein, total carbs and fibre. Net carbs are calculated as total carbs minus fibre. Use the product label where available. Choose an ingredient from the built-in reference database to auto-fill nutrition per quantity. Values are generic estimates; use your package label for branded foods.</p>{form.ingredients.map((x,i)=><div className="ingredient-edit" key={i}><input className="ingname" placeholder="Ingredient (type or choose below)" value={x[0]} onChange={e=>updateIngredient(i,0,e.target.value)}/><select className="ingredient-db-select" aria-label="Choose standard ingredient" value={x[10]||""} onChange={e=>applyIngredientDatabase(i,e.target.value)}><option value="">Nutrition database…</option>{INGREDIENT_DB.map(item=><option key={item.id} value={item.id}>{item.name}</option>)}</select><input aria-label="quantity" type="number" value={x[1]} onChange={e=>updateIngredient(i,1,e.target.value)}/><input aria-label="unit" value={x[2]} onChange={e=>updateIngredient(i,2,e.target.value)}/><input aria-label="calories" type="number" placeholder="kcal" value={x[3]} onChange={e=>updateIngredient(i,3,e.target.value)}/><input aria-label="protein" type="number" placeholder="P g" value={x[4]} onChange={e=>updateIngredient(i,4,e.target.value)}/><input aria-label="total carbs" type="number" placeholder="Total carbs g" value={x[5]} onChange={e=>updateIngredient(i,5,e.target.value)}/><input aria-label="fibre" type="number" placeholder="Fibre g" value={x[6]??0} onChange={e=>updateIngredient(i,6,e.target.value)}/><span className="nutrition-source-tag">{x[8]==="verified"?"Label verified":x[8]==="database"?"Database estimate":"Manual / estimated"}</span><label className="ingredient-photo-upload" title="Add ingredient photo">{x[7]?<img src={x[7]} alt="Ingredient"/>:<span>📷</span>}<input type="file" accept="image/*" onChange={e=>{const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{const rows=form.ingredients.map((row,k)=>{if(k!==i)return row;const next=[...row];next[7]=reader.result;return next});setForm({...form,ingredients:rows})};reader.readAsDataURL(file)}}/></label><button className="removeing" onClick={()=>setForm({...form,ingredients:form.ingredients.filter((_,k)=>k!==i)})}><X size={15}/></button></div>)}</div><div className="formsection"><div className="formsectionhead"><h3>Cooking instructions</h3><button className="linkbtn" onClick={()=>setForm({...form,steps:[...form.steps,""],stepImages:[...(form.stepImages||[]),""]})}><Plus size={15}/> Add step</button></div>{form.steps.map((s,i)=><div className="step-edit visual-step-edit" key={i}><span>{i+1}</span><div className="step-edit-fields"><textarea value={s} placeholder="Short step description (optional for cook)..." onChange={e=>setForm({...form,steps:form.steps.map((v,k)=>k===i?e.target.value:v)})}/><label className="photo-upload">{form.stepImages?.[i]?<img src={form.stepImages[i]} alt={`Step ${i+1} preview`}/>:<span>＋ Add step photo</span>}<input type="file" accept="image/*" onChange={e=>{const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{const imgs=[...(form.stepImages||[])];imgs[i]=reader.result;setForm({...form,stepImages:imgs})};reader.readAsDataURL(file)}}/></label></div><button className="removeing" onClick={()=>setForm({...form,steps:form.steps.filter((_,k)=>k!==i),stepImages:(form.stepImages||[]).filter((_,k)=>k!==i)})}><X size={15}/></button></div>)}</div><div className="modalfoot"><button className="softbtn" onClick={()=>setShowForm(false)}>Cancel</button><button className="primary" onClick={saveRecipe}><Save size={16}/> Save recipe</button></div></div></div>}
   {mealRows.length>0&&<div className="meal-cart">{cartExpanded&&<div className="meal-cart-drawer"><div className="panelhead"><div><span className="eyebrow">YOUR SELECTION</span><h2>Meal planner</h2></div><button className="iconbtn" onClick={()=>setCartExpanded(false)}><X size={16}/></button></div>{mealRows.map(x=><div className="mealitem" key={x.id}><div><b>{x.recipe.name}</b><small>{Math.round(nutrition(x.recipe).kcal/x.recipe.servings)} kcal per serving</small></div><div className="stepper"><button onClick={()=>x.count>1?setMeal(m=>m.map(z=>z.id===x.id?{...z,count:z.count-1}:z)):removeMeal(x.id)}><Minus size={13}/></button><b>{x.count}</b><button onClick={()=>setMeal(m=>m.map(z=>z.id===x.id?{...z,count:z.count+1}:z))}><Plus size={13}/></button></div></div>)}<div className="cart-totals"><div><b>{Math.round(mealTotals.kcal)} kcal</b><small>Calories</small></div><div><b>{mealTotals.protein.toFixed(1)}g</b><small>Protein</small></div><div><b>{mealTotals.carbs.toFixed(1)}g</b><small>Net carbs</small></div><div><b>{mealTotals.fiber.toFixed(1)}g</b><small>Fibre</small></div></div><button className="clearbtn" onClick={()=>setMeal([])}>Clear meal</button></div>}<button className="meal-cart-bar" onClick={()=>setCartExpanded(v=>!v)}><span><b>{mealRows.reduce((a,x)=>a+x.count,0)} dishes added</b><small>{Math.round(mealTotals.kcal)} kcal · {mealTotals.protein.toFixed(1)}g protein</small></span><span>{cartExpanded?"Close":"View meal ↑"}</span></button></div>}
   {toast&&<div className="toast"><Check size={16}/>{toast}</div>}
  </div>
