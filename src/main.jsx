@@ -120,7 +120,65 @@ const INGREDIENT_DB = [
  {id:"sugar",name:"Sugar",kcal:387,p:0,c:100,f:0},
  {id:"honey",name:"Honey",kcal:304,p:0.3,c:82.4,f:0},
  {id:"bread-whole",name:"Whole wheat bread",kcal:247,p:13,c:41,f:7},
- {id:"bread-white",name:"White bread",kcal:266,p:8.9,c:49,f:2.7}
+ {id:"bread-white",name:"White bread",kcal:266,p:8.9,c:49,f:2.7},
+ {id:"coriander-leaves",name:"Fresh coriander leaves",kcal:23,p:2.1,c:3.7,f:2.8},
+ {id:"coriander-seeds",name:"Coriander seeds",kcal:298,p:12.4,c:54.99,f:41.9},
+ {id:"coriander-powder",name:"Coriander powder",kcal:298,p:12.4,c:54.99,f:41.9},
+ {id:"mint",name:"Fresh mint leaves",kcal:44,p:3.3,c:8.4,f:6.8},
+ {id:"curry-leaves",name:"Curry leaves",kcal:108,p:6.1,c:18.7,f:6.4},
+ {id:"green-chilli",name:"Green chilli",kcal:40,p:2,c:9.5,f:1.5},
+ {id:"red-chilli",name:"Red chilli powder",kcal:282,p:13.5,c:50,f:34.8},
+ {id:"turmeric",name:"Turmeric powder",kcal:312,p:9.7,c:67.1,f:22.7},
+ {id:"cumin-seeds",name:"Cumin seeds",kcal:375,p:17.8,c:44.2,f:10.5},
+ {id:"mustard-seeds",name:"Mustard seeds",kcal:508,p:26.1,c:28.1,f:12.2},
+ {id:"ajwain",name:"Ajwain seeds",kcal:305,p:16,c:43,f:21},
+ {id:"garam-masala",name:"Garam masala",kcal:379,p:15,c:46,f:14},
+ {id:"hing",name:"Asafoetida (hing)",kcal:297,p:4,c:68,f:4},
+ {id:"kasuri-methi",name:"Kasuri methi",kcal:323,p:23,c:58,f:25},
+ {id:"ginger",name:"Fresh ginger",kcal:80,p:1.8,c:17.8,f:2},
+ {id:"garlic",name:"Garlic",kcal:149,p:6.4,c:33.1,f:2.1},
+ {id:"lemon",name:"Lemon juice",kcal:22,p:0.4,c:6.9,f:0.3},
+ {id:"lemon-whole",name:"Lemon",kcal:29,p:1.1,c:9.3,f:2.8},
+ {id:"beetroot",name:"Beetroot",kcal:43,p:1.6,c:9.6,f:2.8},
+ {id:"brinjal",name:"Brinjal / eggplant",kcal:25,p:1,c:5.9,f:3},
+ {id:"okra",name:"Bhindi / okra",kcal:33,p:1.9,c:7.5,f:3.2},
+ {id:"lauki",name:"Bottle gourd (lauki)",kcal:14,p:0.6,c:3.4,f:0.5},
+ {id:"pumpkin",name:"Pumpkin",kcal:26,p:1,c:6.5,f:0.5},
+ {id:"radish",name:"Radish",kcal:16,p:0.7,c:3.4,f:1.6},
+ {id:"green-beans",name:"Green beans",kcal:31,p:1.8,c:7,f:3.4},
+ {id:"corn",name:"Sweet corn",kcal:86,p:3.3,c:19,f:2.7},
+ {id:"lettuce",name:"Lettuce",kcal:15,p:1.4,c:2.9,f:1.3},
+ {id:"spring-onion",name:"Spring onion",kcal:32,p:1.8,c:7.3,f:2.6},
+ {id:"zucchini",name:"Zucchini",kcal:17,p:1.2,c:3.1,f:1},
+ {id:"mango",name:"Mango",kcal:60,p:0.8,c:15,f:1.6},
+ {id:"orange",name:"Orange",kcal:47,p:0.9,c:11.8,f:2.4},
+ {id:"strawberry",name:"Strawberries",kcal:32,p:0.7,c:7.7,f:2},
+ {id:"dates",name:"Dates",kcal:282,p:2.5,c:75,f:8},
+ {id:"raisins",name:"Raisins",kcal:299,p:3.1,c:79.2,f:3.7},
+ {id:"walnuts",name:"Walnuts",kcal:654,p:15.2,c:13.7,f:6.7},
+ {id:"peanuts",name:"Peanuts",kcal:567,p:25.8,c:16.1,f:8.5},
+ {id:"pumpkin-seeds",name:"Pumpkin seeds",kcal:559,p:30.2,c:10.7,f:6},
+ {id:"sunflower-seeds",name:"Sunflower seeds",kcal:584,p:20.8,c:20,f:8.6},
+ {id:"sesame",name:"Sesame seeds",kcal:573,p:17.7,c:23.4,f:11.8},
+ {id:"moong-dal-dry",name:"Moong dal, dry",kcal:347,p:23.9,c:62.6,f:16.3},
+ {id:"masoor-dal-dry",name:"Masoor dal, dry",kcal:352,p:24.6,c:63.1,f:10.7},
+ {id:"toor-dal-dry",name:"Toor dal, dry",kcal:343,p:22.3,c:62.8,f:15},
+ {id:"chana-dal-dry",name:"Chana dal, dry",kcal:360,p:20.8,c:60.7,f:12.6},
+ {id:"urad-dal-dry",name:"Urad dal, dry",kcal:341,p:25.2,c:58.9,f:18.3},
+ {id:"quinoa",name:"Quinoa, cooked",kcal:120,p:4.4,c:21.3,f:2.8},
+ {id:"poha",name:"Poha / flattened rice, dry",kcal:350,p:6.7,c:77,f:1.9},
+ {id:"suji",name:"Suji / semolina",kcal:360,p:12.7,c:72.8,f:3.9},
+ {id:"ragi",name:"Ragi flour",kcal:336,p:7.3,c:72,f:11.5},
+ {id:"jowar",name:"Jowar flour",kcal:349,p:10.4,c:72.6,f:6.7},
+ {id:"bajra",name:"Bajra flour",kcal:361,p:11.6,c:67.5,f:11.3},
+ {id:"coconut",name:"Fresh coconut",kcal:354,p:3.3,c:15.2,f:9},
+ {id:"coconut-milk",name:"Coconut milk",kcal:230,p:2.3,c:5.5,f:2.2},
+ {id:"tomato-puree",name:"Tomato puree",kcal:38,p:1.7,c:8.2,f:1.5},
+ {id:"soy-sauce",name:"Soy sauce",kcal:53,p:8.1,c:4.9,f:0.8},
+ {id:"vinegar",name:"Vinegar",kcal:18,p:0,c:0.04,f:0},
+ {id:"mayonnaise",name:"Mayonnaise",kcal:680,p:1,c:0.6,f:0},
+ {id:"peanut-butter",name:"Peanut butter",kcal:588,p:25,c:20,f:6},
+ {id:"jaggery",name:"Jaggery",kcal:383,p:0.4,c:98,f:0}
 ];
 function ingredientWeightGrams(qty, unit, ingredientName="") {
  const q=Number(qty)||0, u=String(unit||"g").toLowerCase().trim(), name=ingredientName.toLowerCase();
@@ -131,7 +189,11 @@ function ingredientWeightGrams(qty, unit, ingredientName="") {
  if (["tbsp","tablespoon"].includes(u)) return q*15;
  if (["cup","cups"].includes(u)) return q*150;
  if (["clove","cloves"].includes(u)) return q*4;
- if (["pcs","pc","piece","pieces"].includes(u)) return q*(/egg/.test(name)?50:/bread/.test(name)?30:30);
+ if (["pcs","pc","piece","pieces"].includes(u)) {
+   const weights=[[/egg/,50],[/onion/,110],[/tomato/,120],[/potato/,150],[/lemon/,60],[/lime/,45],[/banana/,118],[/apple/,180],[/orange/,130],[/avocado/,150],[/capsicum|bell pepper/,120],[/green chilli|red chilli/,8],[/garlic/,3],[/ginger/,5],[/cucumber/,250],[/carrot/,60],[/bread/,30],[/roti|chapati/,40],[/coriander leaves/,30]];
+   const found=weights.find(([re])=>re.test(name));
+   return q*(found?found[1]:30);
+ }
  if (u==="medium") return q*100;
  if (u==="large") return q*150;
  if (u==="small") return q*50;
