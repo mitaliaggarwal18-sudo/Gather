@@ -689,3 +689,12 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
  .ingredient-unit-select { grid-column:auto; }
  .ingredient-edit .nutrition-source-tag { grid-column:1/-1; }
 }
+
+/* Household meal logging, analysis and pantry */
+.field-label{display:flex;flex-direction:column;gap:6px;margin:11px 0;color:#75816f;font-size:10px;font-weight:700}
+.field-label input,.field-label select,.analysis-controls select{width:100%;border:1px solid #e5e8de;border-radius:8px;background:#fff;padding:10px;color:#465342;font-size:12px}
+.qty-control{display:flex;align-items:center;gap:5px;flex-shrink:0}.qty-control button{width:27px;height:27px;border:1px solid var(--line);border-radius:50%;background:#f6f7f1;color:#71816c;display:grid;place-items:center}.qty-control input{width:58px;padding:6px 3px;border:1px solid #e5e8de;border-radius:6px;text-align:center;color:#465342}.qty-control .remove-food{border:0;background:transparent;color:#a47770}
+.save-meal{width:100%;justify-content:center;margin-top:15px}.analysis-controls{display:flex;justify-content:space-between;align-items:center;gap:15px;margin:18px 0}.analysis-controls select{max-width:180px}
+.analysis-panel{padding:20px;margin:18px 0}.popular-row,.pantry-row{display:grid;grid-template-columns:minmax(130px,1fr) minmax(90px,2fr) 35px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #efeee8;font-size:12px;color:#566451}.popular-row b,.pantry-row b{color:#526b50;text-align:right}.popular-bar{height:8px;border-radius:10px;background:#eef1e9;overflow:hidden}.popular-bar i{display:block;height:100%;border-radius:10px;background:#91a887}.pantry-row{grid-template-columns:1fr auto}
+.history-list{background:#fffefa;border:1px solid #ece9df;border-radius:12px;padding:5px 16px;margin-top:12px}.history-row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid #efeee8;font-size:12px}.history-row:last-child{border-bottom:0}.history-row b,.history-row small{display:block}.history-row small{font-size:10px;color:#92998d;margin-top:4px}.history-row strong{color:#526b50;white-space:nowrap}
+@media(max-width:640px){.analysis-controls{align-items:flex-start;flex-direction:column}.analysis-controls select{max-width:none}.popular-row{grid-template-columns:1fr 1fr 28px;gap:7px}.meal-summary .mealitem{align-items:flex-start;flex-direction:column}.qty-control{align-self:flex-end}.history-row{font-size:10px}}
