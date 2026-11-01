@@ -750,3 +750,5 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .manual-food-grid .manual-food-notes{grid-column:1/-1}
 .manual-food-panel>.primary{margin-top:2px}
 @media(max-width:640px){.manual-food-panel{padding:14px}.manual-food-grid{grid-template-columns:minmax(0,1fr);gap:12px}.manual-food-grid .manual-food-notes{grid-column:auto}.manual-food-toggle{align-items:flex-start;flex-direction:column}}
+
+.cover-position-control{display:flex!important;flex-direction:column!important;gap:6px!important;margin-top:12px;color:#687963!important;font-size:11px!important}.cover-position-control input[type=range]{width:100%;accent-color:#687f62}.cover-position-control>span{display:flex;justify-content:space-between;color:#899283;font-size:10px;font-weight:500}
