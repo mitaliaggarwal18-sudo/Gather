@@ -696,3 +696,10 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
  font-size:11px;font-weight:700;cursor:pointer;
 }
 .add-ingredient-below:hover { background:#eaf0e5;border-color:#7f9878; }
+
+
+/* Fractional meal portions and quick-add food items */
+.meal-quantity { width:48px;min-width:0;padding:5px 3px;border:1px solid var(--line);border-radius:6px;background:#fffefa;color:#52634e;text-align:center;font:600 11px 'DM Sans',sans-serif; }
+.meal-quantity::-webkit-inner-spin-button,.meal-quantity::-webkit-outer-spin-button { opacity:1; }
+.food-modal { width:min(620px,100%); }
+.food-modal .formgrid { margin-top:16px; }
