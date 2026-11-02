@@ -780,3 +780,11 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .inline-edit-cover-preview{width:150px;height:100px;object-fit:contain;border-radius:10px;background:#f5f5ef}
 .inline-edit-section h3 .cover-file-button{display:inline-flex;align-items:center;gap:6px}
 @media(max-width:640px){.inline-recipe-edit{padding:14px}.inline-recipe-edit .formgrid{grid-template-columns:1fr}.inline-recipe-edit .formgrid .wide{grid-column:auto}.inline-edit-row{grid-template-columns:16px minmax(0,1fr) 70px 76px 28px;gap:5px}.inline-edit-step{grid-template-columns:24px minmax(0,1fr) 72px 26px;gap:5px}.inline-edit-step .photo-upload{width:72px;height:72px}}
+
+/* Focused inline field editors */
+.inline-pencil{display:inline-flex;vertical-align:middle;margin-left:5px;padding:3px;min-width:24px;min-height:24px;color:var(--muted)}
+.field-inline-editor{display:flex;align-items:center;gap:6px;margin:8px 0;flex-wrap:wrap}
+.field-inline-editor input,.field-inline-editor select,.field-inline-editor textarea{border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--surface);color:var(--text);font:inherit;max-width:100%}
+.field-inline-editor input{min-width:100px}.ingredient-editor input:first-child{min-width:150px}.step-editor textarea{min-width:min(420px,70vw);min-height:75px}
+.cover-pencil,.step-photo-pencil{position:absolute;z-index:3;display:inline-flex;align-items:center;justify-content:center;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:7px;cursor:pointer;color:var(--text)}
+.detailphoto{position:relative}.cover-pencil{right:12px;top:12px}.cover-pencil input,.step-photo-pencil input{display:none}.step-photo-pencil{position:relative;margin-left:8px}
