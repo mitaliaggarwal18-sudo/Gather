@@ -213,7 +213,7 @@ function App(){
  const [recipes,setRecipes]=useState(()=>{try{const stored=JSON.parse(localStorage.getItem("gather-recipes"));return stored?([...stored,...seed.filter(r=>!stored.some(s=>s.id===r.id))]):seed}catch{return seed}});
  const [page,setPage]=useState("Home"),[selected,setSelected]=useState(null),[query,setQuery]=useState(""),[category,setCategory]=useState("All");
  const [rollWrap,setRollWrap]=useState("rice-paper");
- const [meal,setMeal]=useState([]),[mealName,setMealName]=useState("Today's meal"),[showForm,setShowForm]=useState(false),[editing,setEditing]=useState(null);
+ const [meal,setMeal]=useState(()=>{try{return JSON.parse(localStorage.getItem("gather-current-meal"))||[]}catch{return []}}),[mealName,setMealName]=useState("Today's meal"),[showForm,setShowForm]=useState(false),[editing,setEditing]=useState(null);
   const [savedMeals,setSavedMeals]=useState(()=>{try{return JSON.parse(localStorage.getItem("gather-saved-meals"))||[]}catch{return []}});
  const [plannerPerson,setPlannerPerson]=useState("Mitali"),[plannerDate,setPlannerDate]=useState(()=>new Date().toISOString().slice(0,10)),[dailyPlans,setDailyPlans]=useState(()=>{try{return JSON.parse(localStorage.getItem("gather-daily-plans"))||{}}catch{return {}}}),[plannerSelections,setPlannerSelections]=useState({}),[plannerOutside,setPlannerOutside]=useState({name:"",qty:1,kcal:0,protein:0,carbs:0,fiber:0}),[outsideFoodDestination,setOutsideFoodDestination]=useState(null),[plannerSections,setPlannerSections]=useState(["Breakfast","Lunch","Dinner","Snacks"]),[newPlannerSection,setNewPlannerSection]=useState(""); const [plannerActiveSection,setPlannerActiveSection]=useState("Lunch"),[plannerRecipeSearch,setPlannerRecipeSearch]=useState(""),[plannerCategory,setPlannerCategory]=useState("All"),[calorieGoals,setCalorieGoals]=useState(()=>{try{return JSON.parse(localStorage.getItem("gather-calorie-goals"))||{Mitali:1600,Abhinav:2000}}catch{return {Mitali:1600,Abhinav:2000}}}),[insightsStart,setInsightsStart]=useState("2026-01-01");
   const [mealMember,setMealMember]=useState("Mitali"),[editingSavedMeal,setEditingSavedMeal]=useState(null);
@@ -221,7 +221,7 @@ function App(){
  const [expandedPerson,setExpandedPerson]=useState(null),[showOutsideFood,setShowOutsideFood]=useState(false),[outsideFoods,setOutsideFoods]=useState([]);
  const [pendingFoodMember,setPendingFoodMember]=useState("Mitali"),[foodQuery,setFoodQuery]=useState(""),[foodResults,setFoodResults]=useState([]),[foodLoading,setFoodLoading]=useState(false),[foodError,setFoodError]=useState(""),[selectedFood,setSelectedFood]=useState(null),[foodQuantity,setFoodQuantity]=useState("1");
  const [manualFoodOpen,setManualFoodOpen]=useState(false),[manualFood,setManualFood]=useState({name:"",portion:"1 plate / serving",kcal:"",protein:"",carbs:"",fat:"",fiber:"",sugar:"",sodium:"",notes:""});
- useEffect(()=>{try{localStorage.setItem("gather-saved-meals",JSON.stringify(savedMeals));}catch(err){console.error("Could not persist saved meals",err);notify("Could not save meal — storage may be full");}},[savedMeals]);
+ useEffect(()=>{try{localStorage.setItem("gather-saved-meals",JSON.stringify(savedMeals));}catch(err){console.error("Could not persist saved meals",err);notify("Could not save meal — storage may be full");}},[savedMeals]); useEffect(()=>{try{localStorage.setItem("gather-current-meal",JSON.stringify(meal));}catch(err){console.error("Could not persist meal builder cart",err);notify("Meal builder could not persist — browser storage may be full");}},[meal]);
  useEffect(()=>{try{localStorage.setItem("gather-daily-plans",JSON.stringify(dailyPlans));}catch(err){console.error("Could not persist daily planner",err);notify("Could not save day plan — storage may be full");}},[dailyPlans]); useEffect(()=>{try{localStorage.setItem("gather-calorie-goals",JSON.stringify(calorieGoals));}catch(err){console.error(err);}},[calorieGoals]);
   useEffect(()=>{try{localStorage.setItem("gather-recipes",JSON.stringify(recipes));}catch(err){console.error("Could not persist recipes; storage may be full",err);notify("Recipe images are too large to save. Please use smaller photos.");}},[recipes]);
  const notify=m=>{setToast(m);setTimeout(()=>setToast(""),2200)};
@@ -248,34 +248,43 @@ function App(){
    const q=foodQuery.trim();if(!q)return;
    setFoodLoading(true);setFoodError("");setFoodResults([]);setSelectedFood(null);
    try{
-     // Brand names are often indexed separately from product types in Open Food Facts.
-     // Try the entered phrase first, then a small set of useful brand/product variants.
-     const lower=q.toLowerCase();
-     const queries=[q];
-     if(lower.includes("wholetruth")||lower.includes("whole truth")){
-       queries.push("The Whole Truth", "Whole Truth protein bar");
-     }else{
-       const compact=q.replace(/\s+/g," ").trim();
-       if(compact.split(" ").length>2)queries.push(compact.split(" ").slice(0,2).join(" "));
+     // Try exact, simplified, and broad phrase variants so branded and generic foods have a better chance of matching.
+     const clean=q.replace(/[^\\p{L}\\p{N}\\s-]/gu," ").replace(/\\s+/g," ").trim();
+     const lower=clean.toLowerCase();
+     const terms=[clean];
+     const words=clean.split(" ").filter(Boolean);
+     if(words.length>2)terms.push(words.slice(0,3).join(" "),words.slice(0,2).join(" "));
+     if(words.length===2)terms.push(words[0]);
+     if(/whole.?truth/.test(lower))terms.push("The Whole Truth protein bar","Whole Truth");
+     if(/maggi/.test(lower))terms.push("Maggi noodles");
+     if(/lays|lay.?s/.test(lower))terms.push("Lay's potato chips");
+     const unique=[...new Set(terms.map(x=>x.trim()).filter(x=>x.length>=2))];
+     const found=new Map();let failures=0;
+     for(const term of unique){
+       const url="https://world.openfoodfacts.org/cgi/search.pl?"+new URLSearchParams({search_terms:term,search_simple:"1",action:"process",json:"1",page_size:"40",fields:"code,product_name,brands,quantity,serving_size,serving_quantity,ingredients_text,nutriments,image_front_small_url,url"});
+       try{
+         const res=await fetch(url,{headers:{"Accept":"application/json"}});
+         if(!res.ok){failures++;continue;}
+         const data=await res.json();
+         (data.products||[]).forEach(p=>{const key=p.code||p.product_name;if(key&&!found.has(key))found.set(key,p)});
+       }catch{failures++}
+       if(found.size>=60)break;
      }
-     const uniqueQueries=[...new Set(queries.map(x=>x.trim()).filter(Boolean))];
-     const found=new Map();
-     for(const term of uniqueQueries){
-       const url="https://world.openfoodfacts.org/cgi/search.pl?"+new URLSearchParams({search_terms:term,search_simple:"1",action:"process",json:"1",page_size:"20",fields:"code,product_name,brands,quantity,serving_size,serving_quantity,ingredients_text,nutriments,image_front_small_url,url"});
-       const res=await fetch(url,{headers:{"Accept":"application/json"}});
-       if(!res.ok)throw new Error("Food database is temporarily unavailable.");
-       const data=await res.json();
-       (data.products||[]).forEach(p=>{const key=p.code||p.product_name;if(key&&!found.has(key))found.set(key,p)});
-       if(found.size>=8)break;
-     }
+     const norm=v=>String(v||"").toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").replace(/[^a-z0-9]+/g," ").trim();
+     const queryNorm=norm(clean);
      const items=[...found.values()].map(p=>{
-       const n=p.nutriments||{}, per100={kcal:Number(n["energy-kcal_100g"]??(Number(n["energy_100g"]||0)/4.184))||0,protein:Number(n.proteins_100g)||0,carbs:Number(n.carbohydrates_100g)||0,fiber:Number(n.fiber_100g)||0};
+       const n=p.nutriments||{},energy=Number(n["energy-kcal_100g"]??(Number(n["energy_100g"]||0)/4.184))||0;
+       const per100={kcal:energy,protein:Number(n.proteins_100g)||0,carbs:Number(n.carbohydrates_100g)||0,fiber:Number(n.fiber_100g)||0};
        const has=per100.kcal>0||per100.protein>0||per100.carbs>0;
-       const servingG=Number(p.serving_quantity)||0;
-       return {id:p.code||p.product_name,name:p.product_name||p.brands||"Unnamed food",brand:p.brands||"",quantity:p.quantity||"",servingSize:p.serving_size||"",servingG,ingredients:p.ingredients_text||"",per100,has,image:p.image_front_small_url||"",source:"Open Food Facts",url:p.url||""};
-     }).filter(x=>x.name&&x.has);
-     setFoodResults(items);
-     if(!items.length)setFoodError("No matching item with usable nutrition was found. Try “The Whole Truth” or scan the product barcode. Some products may not yet have nutrition data in Open Food Facts.");
+       const servingG=Number(p.serving_quantity)||0,name=p.product_name||p.brands||"Unnamed food",brand=p.brands||"";
+       const hay=norm(name+" "+brand+" "+p.quantity), exact=hay.includes(queryNorm), words=queryNorm.split(" ").filter(w=>w.length>1);
+       const coverage=words.length?words.filter(w=>hay.includes(w)).length/words.length:0;
+       const score=(exact?100:0)+coverage*50+(per100.kcal>0?10:0)+(p.ingredients_text?2:0);
+       return {id:p.code||name,name,brand,quantity:p.quantity||"",servingSize:p.serving_size||"",servingG,ingredients:p.ingredients_text||"",per100,has,image:p.image_front_small_url||"",source:"Open Food Facts",url:p.url||"",score};
+     }).filter(x=>x.name&&x.has).sort((a,b)=>b.score-a.score);
+     const seen=new Set(),ranked=items.filter(x=>{const key=norm(x.name+" "+x.brand);if(seen.has(key))return false;seen.add(key);return true;}).slice(0,30);
+     setFoodResults(ranked);
+     if(!ranked.length)setFoodError(failures===unique.length?"Food search service could not be reached. Please retry or use manual nutrition entry.":"No matching food with usable nutrition found. Try a shorter name, brand plus product type, or manual nutrition entry.");
    }catch(e){setFoodError(e.message||"Could not search food database.");}
    finally{setFoodLoading(false);}
  }
