@@ -860,3 +860,57 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .planner-add-section{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
 .planner-add-section input{flex:1;min-width:200px}
 @media(max-width:640px){.planner-nutrition{grid-template-columns:repeat(2,minmax(0,1fr))}.planner-toolbar label{flex:1}.planner-section{padding:12px}}
+
+/* Gather visual daily planner + goals + insights */
+.visual-planner{max-width:1400px}
+.visual-planner-top{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:0 0 22px}
+.planner-person-switch,.goals-person-tabs{display:flex;gap:8px;background:#f1f3eb;padding:5px;border-radius:30px}
+.planner-person-switch button,.goals-person-tabs button{display:flex;align-items:center;gap:8px;border:0;background:transparent;border-radius:28px;padding:9px 16px;color:#53634f;font-weight:600;cursor:pointer}
+.planner-person-switch button.active,.goals-person-tabs button.active{background:#55734f;color:white;box-shadow:0 3px 12px #304b2b20}
+.person-avatar{display:inline-flex;align-items:center;justify-content:center;width:27px;height:27px;border-radius:50%;background:#e3eadb;color:#526d4b;font-weight:700}
+.planner-person-switch button.active .person-avatar{background:#ffffff35;color:white}
+.planner-date-control{display:flex;align-items:center;gap:8px;padding:10px 13px;border:1px solid var(--line,#e7e8df);border-radius:24px;background:#fff;color:#63735f;font-size:12px}
+.planner-date-control input{border:0;background:transparent;color:var(--text,#30392f);font:inherit}
+.day-total-pill{margin-left:auto;display:flex;flex-direction:column;gap:2px;background:#eef3e8;border-radius:16px;padding:12px 18px;min-width:150px}
+.day-total-pill span,.day-total-pill small{font-size:10px;color:#6b8062;letter-spacing:.08em}.day-total-pill b{font-size:22px;color:#344b32}
+.planner-main-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(330px,.8fr);gap:22px;align-items:start}
+.planner-recipe-browser{min-width:0}
+.planner-greeting{padding:12px 0 18px}.planner-greeting h1{font-size:clamp(28px,3vw,42px);margin:8px 0;color:#303a30}.planner-greeting p{color:#778273;margin:0}
+.planner-section-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}
+.planner-section-tabs button{border:1px solid #e6e9df;border-radius:24px;background:#fff;padding:10px 15px;color:#667461;font-weight:600;cursor:pointer}
+.planner-section-tabs button.active{background:#e7efdf;border-color:#d9e5d0;color:#42613e}
+.planner-recipe-tools{display:flex;gap:9px;margin-bottom:14px}
+.planner-search{display:flex;align-items:center;gap:8px;flex:1;background:white;border:1px solid #e6e8df;border-radius:12px;padding:0 12px;color:#8a9584}
+.planner-search input{width:100%;border:0;outline:0;background:transparent;padding:11px 0;font:inherit}
+.planner-recipe-tools select{border:1px solid #e6e8df;border-radius:12px;background:#fff;padding:10px;color:#5b6c56}
+.planner-recipe-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.planner-recipe-card{display:flex;flex-direction:column;text-align:left;overflow:hidden;padding:0;border:1px solid #e9e9e0;background:#fff;border-radius:16px;cursor:pointer;transition:transform .16s,box-shadow .16s}
+.planner-recipe-card:hover{transform:translateY(-3px);box-shadow:0 9px 22px #33472b12}
+.planner-recipe-card>img,.planner-recipe-placeholder{width:100%;height:155px;object-fit:cover;background:#eef2e9}
+.planner-recipe-placeholder{display:flex;align-items:center;justify-content:center;font-size:44px}
+.planner-recipe-card-body{display:grid;grid-template-columns:1fr auto;gap:5px;padding:12px}
+.planner-recipe-card-body b{font-size:14px;color:#364035}.planner-recipe-card-body small{font-size:11px;color:#7c8878;grid-column:1}
+.planner-card-add{grid-column:2;grid-row:1/3;display:flex;align-items:center;gap:4px;color:#56734e;background:#eef3e8;border-radius:18px;padding:7px 10px;font-size:12px;font-weight:700}
+.planner-add-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.planner-add-options button{display:grid;grid-template-columns:42px 1fr;grid-template-rows:auto auto;align-items:center;text-align:left;gap:3px 10px;border:1px solid #e4e8dc;border-radius:15px;background:#f8f9f4;padding:13px;cursor:pointer}
+.planner-add-options button>span{grid-row:1/3;font-size:27px}.planner-add-options b{font-size:13px;color:#526c4d}.planner-add-options small{font-size:11px;color:#879181}
+.planner-meal-summary{position:sticky;top:18px;background:#fffdf9;border:1px solid #e9e9df;border-radius:20px;padding:18px;box-shadow:0 8px 24px #3b4a2910;min-width:0}
+.planner-meal-summary-head{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #eceee5;padding-bottom:14px}
+.planner-meal-summary-head h2{margin:5px 0 0;font-size:23px;color:#303a30}.meal-total-kcal{font-size:18px;font-weight:700;color:#5b7654}
+.planner-meal-empty{display:flex;flex-direction:column;align-items:center;text-align:center;padding:48px 14px;color:#758170}.planner-meal-empty span{font-size:42px;margin-bottom:12px}.planner-meal-empty b{color:#4c5c47}.planner-meal-empty p{font-size:12px}
+.planner-meal-item{padding:14px 0;border-bottom:1px solid #eef0e8}
+.planner-meal-item-heading{display:flex;align-items:center;gap:10px;min-width:0}
+.planner-meal-item-heading>img,.planner-mini-food{width:54px;height:54px;object-fit:cover;border-radius:11px;background:#eef2e8;flex-shrink:0}
+.planner-mini-food{display:flex;align-items:center;justify-content:center;font-size:24px}
+.planner-meal-item-heading>div:nth-child(2){display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}.planner-meal-item-heading b{font-size:13px;color:#344033}.planner-meal-item-heading small{font-size:11px;color:#7b8676}
+.planner-item-actions{display:flex;align-items:center;gap:5px}.planner-item-actions button{border:1px solid #e5e8df;background:#f7f8f3;border-radius:50%;width:27px;height:27px;display:flex;align-items:center;justify-content:center;color:#66755e;cursor:pointer}.planner-item-actions span{font-size:12px;font-weight:600;min-width:20px;text-align:center}
+.meal-ingredient-editor{margin:10px 0 0;background:#f8f9f5;border-radius:12px;padding:10px 12px}.meal-ingredient-editor summary{display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;font-weight:700;color:#61775a;list-style:none}.meal-ingredient-editor summary::-webkit-details-marker{display:none}.meal-ingredient-list{display:grid;gap:7px;margin-top:10px}.meal-ingredient-list label{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px}.meal-ingredient-list label span{flex:1}.meal-ingredient-list input{width:75px;border:1px solid #e3e7dc;border-radius:8px;padding:6px;background:white}
+.planner-meal-bottom-belt{display:flex;flex-direction:column;gap:4px;background:#4e694b;color:white;border-radius:13px;padding:13px 15px;margin-top:15px}.planner-meal-bottom-belt span{font-size:9px;letter-spacing:.12em}.planner-meal-bottom-belt b{font-size:22px}.planner-meal-bottom-belt small{font-size:11px;color:#e3eadf}
+.goals-page{max-width:900px}.goals-person-tabs{width:max-content;margin:22px 0}.goals-target-card{padding:28px;max-width:600px;background:#f8f9f4}.goals-target-card label{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-weight:700;margin:18px 0}.goals-target-card input{font-size:28px;width:180px;padding:12px;border:1px solid #e2e7db;border-radius:12px;background:white;color:#40533b}.goals-target-card label small{color:#81907b}.goals-target-card p{font-size:12px;color:#7c8876}
+.meal-insights-page{max-width:1400px}.insights-topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.insights-title{margin:20px 0}.insights-title h1{font-size:38px;margin:0;color:#303a30}.insights-title p{color:#758171;margin:6px 0}
+.insights-hero{padding:24px;background:#f0f4e9;border:1px solid #e6ecdd;border-radius:20px;margin:14px 0}.insights-hero-message{display:flex;align-items:center;gap:18px}.insight-target-icon{font-size:38px}.insights-hero h2{margin:5px 0;font-size:26px;color:#3c5a36}.insights-hero p{margin:5px 0;color:#65745e}
+.insights-date-range{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:14px 18px;margin:14px 0}.insights-date-range label{display:flex;align-items:center;gap:8px;font-weight:700;color:#61745a}.insights-date-range input{border:1px solid #e4e8de;border-radius:20px;padding:8px 12px;background:white}.insights-date-range span{color:#758171;font-size:12px}.insights-date-range .linkbtn{margin-left:auto}
+.insights-metrics-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:14px 0}.insights-metric{padding:18px}.insights-metric>strong{display:block;font-size:32px;color:#4f7048;margin:10px 0}.insights-metric strong small{font-size:14px}.insights-metric>small,.insights-metric p{font-size:11px;color:#7c8876}.insight-progress{height:7px;background:#e8eddf;border-radius:9px;overflow:hidden;margin-top:12px}.insight-progress i{display:block;height:100%;background:#6a9459;border-radius:9px}
+.insights-trend{padding:20px;margin:16px 0}.insights-bars{height:230px;display:flex;align-items:end;gap:5px;overflow-x:auto;padding:14px 0 0}.insight-bar-wrap{height:100%;min-width:22px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:end;gap:5px}.insight-bar{width:100%;min-height:5px;border-radius:5px 5px 0 0}.insight-bar.on{background:#b8d9a3}.insight-bar.off{background:#f1b9b7}.insight-bar-wrap small{font-size:9px;color:#8a9583;white-space:nowrap}.insights-bottom{display:flex;align-items:center;gap:14px;padding:18px;background:#f6f8f0}.insights-bottom b{color:#4c6946}.insights-bottom p{font-size:12px;color:#778372;margin:5px 0 0}
+@media(max-width:900px){.planner-main-grid{grid-template-columns:1fr}.planner-meal-summary{position:static}.insights-metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.planner-recipe-grid{grid-template-columns:1fr 1fr;gap:8px}.planner-recipe-card>img,.planner-recipe-placeholder{height:110px}.planner-recipe-card-body{padding:9px}.planner-add-options{grid-template-columns:1fr}.insights-metrics-grid{grid-template-columns:1fr 1fr}.day-total-pill{margin-left:0}.planner-date-control{flex:1}.insights-date-range .linkbtn{margin-left:0}}
