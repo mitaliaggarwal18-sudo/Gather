@@ -837,3 +837,26 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .meal-item-schedule label{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted,#738078)}
 .meal-item-schedule select,.meal-item-schedule input{border:1px solid var(--line,#e6e8e2);border-radius:8px;padding:6px 8px;font:inherit;font-size:12px;background:var(--surface,#fff);color:var(--text,#27352d)}
 .meal-save-hint{font-size:12px;color:var(--muted,#738078);align-self:center}
+
+/* Daily Planner page */
+.daily-planner{max-width:1120px}
+.planner-toolbar{display:flex;align-items:end;gap:14px;flex-wrap:wrap;margin:20px 0}
+.planner-toolbar label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted,#738078);min-width:170px}
+.planner-toolbar select,.planner-toolbar input,.planner-add-recipe select,.planner-add-section input,.planner-outside-form input{border:1px solid var(--line,#e6e8e2);border-radius:9px;padding:10px;background:var(--surface,#fff);color:var(--text,#27352d);font:inherit}
+.planner-nutrition{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0;padding:18px;background:var(--soft-green,#eef3e9)}
+.planner-nutrition span{display:flex;flex-direction:column;gap:4px}.planner-nutrition b{font-size:20px;color:var(--green,#526e50)}.planner-nutrition small{font-size:11px;color:var(--muted,#738078)}
+.planner-section{margin:16px 0;padding:18px}
+.planner-add-recipe{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 16px}
+.planner-add-recipe select{flex:1;min-width:220px}
+.planner-entry{border-top:1px solid var(--line,#e6e8e2);padding:12px 0}
+.planner-entry-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.planner-entry-head>div:first-child{display:flex;flex-direction:column;gap:4px}.planner-entry-head small{font-size:12px;color:var(--muted,#738078)}
+.planner-entry .stepper input{width:60px;border:1px solid var(--line,#e6e8e2);border-radius:8px;padding:6px}
+.planner-outside{margin-top:12px;border-top:1px solid var(--line,#e6e8e2);padding-top:12px}
+.planner-outside summary{display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--green,#526e50);font-weight:600;font-size:13px}
+.planner-outside-form{display:flex;align-items:end;gap:9px;flex-wrap:wrap;padding:12px 0}
+.planner-outside-form label{display:flex;flex-direction:column;gap:5px;font-size:11px;color:var(--muted,#738078);min-width:95px;flex:1}
+.planner-outside-form label:first-child{min-width:180px}
+.planner-add-section{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.planner-add-section input{flex:1;min-width:200px}
+@media(max-width:640px){.planner-nutrition{grid-template-columns:repeat(2,minmax(0,1fr))}.planner-toolbar label{flex:1}.planner-section{padding:12px}}
