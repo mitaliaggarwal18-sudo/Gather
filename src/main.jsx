@@ -255,7 +255,7 @@ function App(){
      if(lower.includes("wholetruth")||lower.includes("whole truth")){
        queries.push("The Whole Truth", "Whole Truth protein bar");
      }else{
-       const compact=q.replace(/\\s+/g," ").trim();
+       const compact=q.replace(/\s+/g," ").trim();
        if(compact.split(" ").length>2)queries.push(compact.split(" ").slice(0,2).join(" "));
      }
      const uniqueQueries=[...new Set(queries.map(x=>x.trim()).filter(Boolean))];
