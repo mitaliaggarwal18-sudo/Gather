@@ -188,11 +188,11 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 }
 .recipecard:hover { transform:translateY(-3px);box-shadow:var(--shadow); }
 .cardphoto {
-  height:190px;position:relative;display:grid;place-items:center;
+  height:230px;position:relative;display:grid;place-items:center;
   background:#edf0e7;overflow:hidden;
 }
 .cardphoto span { font-size:54px;filter:drop-shadow(0 7px 5px #00000012); }
-.cardphoto img{width:100%;height:100%;object-fit:contain;display:block;padding:6px;box-sizing:border-box;}
+.cardphoto img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;display:block;padding:4px;box-sizing:border-box;transform:none!important;}
 
 .cardphoto small {
   position:absolute;top:11px;left:11px;
@@ -561,7 +561,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
   .food-bowl { font-size:58px; }
   .floating-note { right:2px;bottom:4px;font-size:11px; }
   .quickgrid,.recipegrid { grid-template-columns:1fr 1fr;gap:10px; }
-  .cardphoto { height:100px; }
+  .cardphoto { height:180px; }
   .cardphoto span { font-size:42px; }
   .cardbody { padding:10px; }
   .cardbody h3 { font-size:11px; }
