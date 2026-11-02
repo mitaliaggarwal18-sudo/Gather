@@ -917,3 +917,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 
 /* Keep the fixed meal-builder drawer from covering the Meal Insights dashboard. */
 .dual-meal-cart.insights-hide-meal-cart{display:none!important}
+
+/* Keep meal access inside the relevant pages instead of persistent bottom ribbons. */
+.dual-meal-cart{display:none!important}
