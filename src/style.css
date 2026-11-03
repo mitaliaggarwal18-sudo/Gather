@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 16538)
+Total output lines: 983
+
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap');
 
 :root {
@@ -681,64 +684,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 }
 .ingredient-edit .nutrition-source-tag { grid-column:1/-1;margin-top:0; }
 @media(max-width:900px) {
- .ingredient-edit { grid-template-columns:minmax(130px,1.4fr) minmax(140px,1.3fr) 55px 65px 58px 58px 58px 58px 35px 25px; }
-}
-@media(max-width:640px) {
- .home-recipe-heading { align-items:flex-start; }
- .home-recipe-heading h1 { font-size:29px; }
- .ingredient-edit-head { display:none; }
- .ingredient-edit { grid-template-columns:minmax(110px,1fr) minmax(120px,1fr) 60px 70px; }
- .ingredient-unit-select { grid-column:auto; }
- .ingredient-edit .nutrition-source-tag { grid-column:1/-1; }
-}
-
-.person-cart-section{padding:12px 0 15px;border-bottom:1px solid #e9eadf}.person-cart-heading{display:flex;justify-content:space-between;align-items:center;margin:0 0 8px;padding:8px 10px;background:#eef2e9;border-radius:8px;color:#526b50}.person-cart-heading b{font-size:13px}.person-cart-heading span{font-size:10px}.cart-qty{width:48px;padding:4px 2px;text-align:center;border:1px solid #e5e8de;border-radius:5px;font-size:11px}.remove-food{border:0;background:transparent;color:#a47770}.add-food-inline{display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:7px 10px;border:1px dashed #aebaa5;border-radius:7px;background:#fbfcf8;color:#526b50;font-size:10px}.outside-food-cta{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;margin-top:12px;border-top:1px solid #eceee5}.outside-food-cta b,.outside-food-cta small{display:block}.outside-food-cta b{font-size:12px;color:#526b50}.outside-food-cta small{font-size:10px;color:#92998d;margin-top:4px}.person-picker-modal{max-width:420px}.person-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}.person-choice-grid button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px 10px;border:1px solid #e5e8de;border-radius:12px;background:#fbfcf8;color:#526b50}.person-choice-grid button span{font-size:28px}.person-choice-grid button b{font-size:14px}.person-choice-grid button small{font-size:10px;color:#92998d}.person-picker-modal>.softbtn{width:100%;justify-content:center}
-
-
-/* Independent household meal ribbons */
-.tile-add-pair{position:absolute;right:10px;bottom:10px;z-index:3;display:flex;gap:5px}
-.tile-add-person{width:30px;height:30px;border:1px solid #dce6d5;border-radius:9px;background:#e9f0e4;color:#526b50;font-size:11px;font-weight:800;box-shadow:0 2px 7px #263b2612}
-.tile-add-person:hover{background:#dce9d5;transform:translateY(-1px)}
-.recipecard .cardfoot{padding-right:76px}
-.dual-meal-cart{position:fixed;z-index:40;bottom:0;left:236px;right:0;padding:10px 22px;display:grid;grid-template-columns:1fr 1fr;gap:10px;pointer-events:none}
-.dual-person{min-width:0;pointer-events:auto}
-.dual-ribbon{width:100%;min-height:58px;padding:10px 14px;border:0;border-radius:12px 12px 0 0;background:#526b50;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;box-shadow:0 4px 20px #263b2630}
-.dual-ribbon.active{background:#405a40}
-.dual-ribbon b,.dual-ribbon small{display:block}
-.dual-ribbon b{font-size:12px}
-.dual-ribbon small{font-size:9px;color:#e1eadc;margin-top:4px}
-.dual-ribbon>span:last-child{font-size:10px;white-space:nowrap}
-.dual-drawer{max-height:55vh;overflow:auto;margin-bottom:8px;padding:15px;background:#fffefa;border:1px solid #e8e9df;border-radius:14px;box-shadow:0 5px 30px #263b2620}
-.dual-drawer .panelhead h2{font-size:22px;margin:4px 0}
-.dual-drawer .mealitem{gap:8px}
-.food-search-modal{max-width:700px}
-.food-search-row{display:flex;gap:8px;margin:14px 0}
-.food-search-row input{flex:1;min-width:0;border:1px solid #e5e8de;border-radius:8px;padding:11px;background:white}
-.food-result{width:100%;display:flex;gap:12px;align-items:flex-start;padding:11px;margin:7px 0;text-align:left;border:1px solid #e8e9df;border-radius:10px;background:#fff}
-.food-result.selected{border-color:#8fa889;background:#f1f5ed}
-.food-result img{width:54px;height:54px;object-fit:contain;border-radius:7px;background:#f7f7f1}
-.food-result span{min-width:0}
-.food-result b,.food-result small{display:block}
-.food-result b{font-size:12px;color:#40523d}
-.food-result small{font-size:9px;color:#84907e;margin-top:4px;line-height:1.4}
-.food-error{padding:10px;background:#fff3e5;border-radius:8px;color:#9b6428;font-size:11px}
-.selected-food-panel{padding:14px;margin-top:12px;border:1px solid #e5e8de;border-radius:12px;background:#f7f8f3}
-.selected-food-panel>b{font-size:13px;color:#40523d}
-.selected-food-panel p{font-size:10px;color:#788174;line-height:1.5}
-.food-macros{display:flex;gap:13px;flex-wrap:wrap;margin:10px 0;color:#526b50;font-size:11px;font-weight:700}
-.food-macros small{width:100%;font-size:9px;color:#879181;font-weight:400}
-.quantity-label{display:flex;flex-direction:column;gap:6px;max-width:220px;font-size:10px;font-weight:700;color:#75816f;margin:12px 0}
-.quantity-label input{padding:9px;border:1px solid #e5e8de;border-radius:7px;background:#fff}
-@media(max-width:850px){.dual-meal-cart{left:0;padding:8px 10px;gap:7px}.dual-ribbon{padding:9px 10px}.dual-ribbon small{font-size:8px}.dual-drawer{max-height:58vh}}
-@media(max-width:600px){.dual-meal-cart{grid-template-columns:1fr 1fr;padding:6px 7px;gap:6px}.dual-ribbon{min-height:54px}.dual-ribbon b{font-size:10px}.dual-ribbon small{font-size:7px}.tile-add-person{width:26px;height:26px}.food-search-row{flex-direction:column}.food-result img{width:42px;height:42px}}
-
-
-/* Keep the food search dialog above the meal carts; align both household ribbons to the viewport bottom. */
-.dual-person{display:flex;flex-direction:column;justify-content:flex-end}
-.food-search-back{z-index:70}
-
-/* User-managed recipe cover photos */
-.cardphoto>img{width:100%;height:100%;object-fit:cover;display:block}.detailphoto{overflow:hidden}.detailphoto>img{width:100%;height:100%;object-fit:cover;display:block}.cover-edit-row{display:flex;gap:16px;align-items:center;margin-top:12px}.cover-edit-preview{width:150px;height:105px;flex:0 0 150px;border-radius:10px;background:#edf0e7;display:grid;place-items:center;overflow:hidden;font-size:42px}.cover-edit-preview img{width:100%;height:100%;object-fit:cover}.cover-file-button{display:inline-flex!important;flex-direction:row!important;align-items:center;gap:7px;background:#eef2e9;border:1px solid #dce5d6;border-radius:8px;padding:9px 12px;cursor:pointer;color:#53694e!important;font-size:11px!important}.cover-file-button input{display:none}.cover-edit-section .hint{margin:5px 0 10px}@media(max-width:600px){.cover-edit-row{align-items:flex-start;flex-direction:column}}
+ .ingredient-edit { grid-template-columns:minmax(130px,1.4fr) minmax(140px…1538 tokens truncated…border-radius:8px;padding:9px 12px;cursor:pointer;color:#53694e!important;font-size:11px!important}.cover-file-button input{display:none}.cover-edit-section .hint{margin:5px 0 10px}@media(max-width:600px){.cover-edit-row{align-items:flex-start;flex-direction:column}}
 
 /* Manual outside-food entry: keep fields aligned and consistent with Gather forms */
 .manual-food-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:18px 0 10px;color:var(--ink,#344333);font-size:14px}
@@ -808,7 +754,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .saved-meal-card h3{margin:8px 0;font-size:18px}
 .saved-meal-card p{color:var(--muted,#738078);font-size:13px;margin:0 0 14px}
 .saved-meal-card>div{display:flex;align-items:center;gap:8px}
-.save-meal-btn{width:100%;justify-content:center;margin:12px 0 16px}
+.meal-save-actions{display:flex;flex-direction:column;gap:8px;margin:12px 0 16px}.meal-save-actions .save-meal-btn,.meal-save-actions .meal-save-button{width:100%;justify-content:center;margin:0}.meal-save-actions .softbtn{justify-content:center}
 .meal-ingredient-adjust{margin-top:10px;max-width:310px}
 .meal-ingredient-adjust summary{cursor:pointer;color:var(--green,#2e6b4e);font-size:12px;font-weight:650;padding:6px 0}
 .meal-ingredient-adjust label{display:grid;grid-template-columns:minmax(0,1fr) auto 72px;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--line,#e6e8e2);font-size:12px}
@@ -899,7 +845,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .planner-meal-summary-head h2{margin:5px 0 0;font-size:23px;color:#303a30}.meal-total-kcal{font-size:18px;font-weight:700;color:#5b7654}
 .planner-meal-empty{display:flex;flex-direction:column;align-items:center;text-align:center;padding:48px 14px;color:#758170}.planner-meal-empty span{font-size:42px;margin-bottom:12px}.planner-meal-empty b{color:#4c5c47}.planner-meal-empty p{font-size:12px}
 .planner-meal-item{padding:14px 0;border-bottom:1px solid #eef0e8}
-.planner-meal-item-heading{display:flex;align-items:center;gap:10px;min-width:0}
+.planner-meal-item-heading{display:flex;align-items:center;gap:10px;min-width:0}.planner-recipe-link{cursor:pointer;border-radius:12px}.planner-recipe-link:hover b,.planner-recipe-link:focus-visible b{color:#5b7654;text-decoration:underline;text-underline-offset:3px}.planner-recipe-link:focus-visible{outline:2px solid #70896b;outline-offset:3px}
 .planner-meal-item-heading>img,.planner-mini-food{width:54px;height:54px;object-fit:cover;border-radius:11px;background:#eef2e8;flex-shrink:0}
 .planner-mini-food{display:flex;align-items:center;justify-content:center;font-size:24px}
 .planner-meal-item-heading>div:nth-child(2){display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}.planner-meal-item-heading b{font-size:13px;color:#344033}.planner-meal-item-heading small{font-size:11px;color:#7b8676}
@@ -920,3 +866,64 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 
 /* Keep meal access inside the relevant pages instead of persistent bottom ribbons. */
 .dual-meal-cart{display:none!important}
+
+/* Planner-first workflow, meal history, pantry and voice-assisted recipe entry */
+.recipe-workspace-single{grid-template-columns:minmax(0,1fr)}
+.recipe-workspace-single.with-builder{grid-template-columns:minmax(0,1fr) 290px}
+.history-toolbar,.pantry-context{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:16px 0}
+.history-list{display:grid;gap:15px}
+.history-order{padding:0;overflow:hidden}
+.history-order-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:20px;background:#f7f8f2;border-bottom:1px solid var(--line,#e6e8e2)}
+.history-order-head h2{font-size:21px;margin:6px 0;color:#344033}
+.history-order-head small{color:#7a8676;font-size:12px}
+.history-order-head>strong{white-space:nowrap;font-size:20px;color:#55734f}
+.history-title-input{display:block;margin:6px 0;padding:8px 10px;border:1px solid #dfe5d8;border-radius:8px;font:inherit;color:#344033}
+.history-items{padding:0 20px}
+.history-item{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:1px solid #eef0e8}
+.history-item>div{min-width:0;flex:1}
+.history-item b,.history-item small{display:block}
+.history-item b{color:#344033;font-size:14px}
+.history-item small{color:#7b8676;font-size:12px;margin-top:4px}
+.history-serving-edit{display:flex;align-items:center;gap:8px;color:#71806c;font-size:12px;white-space:nowrap}
+.history-serving-edit input{width:78px;padding:7px;border:1px solid #dfe5d8;border-radius:8px;font:inherit}
+.history-order-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 20px;color:#758171;font-size:12px}
+.history-order-foot>div{display:flex;align-items:center;gap:8px}
+.history-order-foot button{display:inline-flex;align-items:center;gap:6px}
+.pantry-page{max-width:1100px}
+.pantry-needs,.pantry-inventory{margin:16px 0;padding:20px}
+.pantry-needs h2,.pantry-inventory h2{margin:5px 0}
+.pantry-needs-list,.pantry-stock-list{display:grid}
+.pantry-need,.pantry-stock-list>div{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px solid #edf0e8}
+.pantry-need>div,.pantry-stock-list>div>span{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+.pantry-need small,.pantry-stock-list small{color:#7c8878;font-size:12px}
+.pantry-need>label{display:flex;align-items:center;gap:7px;color:#73806d;font-size:11px;white-space:nowrap}
+.pantry-need input{width:92px;padding:8px;border:1px solid #dfe5d8;border-radius:8px;font:inherit}
+.pantry-shortage{color:#a65f48;white-space:nowrap;font-size:13px}
+.pantry-ready{color:#55734f;white-space:nowrap;font-size:13px}
+.pantry-add-form{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:14px 0}
+.pantry-add-form input,.pantry-add-form select{padding:10px 11px;border:1px solid #dfe5d8;border-radius:9px;background:#fff;font:inherit;color:#344033}
+.pantry-add-form input:first-child{flex:1;min-width:180px}
+.pantry-add-form input:nth-child(2){width:120px}
+.pantry-add-form button,.planner-save-meal{display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.empty-inventory{color:#7b8676;font-size:13px}
+.planner-pantry-link{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.planner-new-recipe{display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
+.planner-save-meal{width:100%;margin:14px 0 2px}
+.recipe-voice-panel{display:grid;gap:10px;padding:16px;margin:16px 0;background:#f5f7f0;border:1px solid #e3e9dc;border-radius:14px}
+.recipe-voice-panel p{margin:5px 0;color:#71806c;font-size:13px}
+.recipe-voice-panel textarea{width:100%;min-height:85px;resize:vertical;padding:11px;border:1px solid #dfe5d8;border-radius:9px;font:inherit;background:white;color:#344033}
+.recipe-voice-panel>div:last-of-type{display:flex;gap:8px;flex-wrap:wrap}
+.recipe-voice-panel button,.manual-food-actions button{display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.recipe-voice-panel>small{color:#758171;font-size:11px}
+.manual-food-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.food-error{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.food-error p{margin:0}
+@media(max-width:900px){.recipe-workspace-single.with-builder{grid-template-columns:1fr}.pantry-context{align-items:flex-start}.pantry-need{flex-wrap:wrap}}
+@media(max-width:600px){.history-order-head,.history-order-foot{padding:14px}.history-items{padding:0 14px}.history-order-head>strong{font-size:16px}.pantry-need{align-items:flex-start}.pantry-need>label{width:100%;justify-content:space-between}.pantry-shortage,.pantry-ready{width:100%}.pantry-add-form input:first-child{min-width:100%}.recipe-voice-panel>div:last-of-type,.manual-food-actions{flex-direction:column}.recipe-voice-panel button,.manual-food-actions button{width:100%}}
+.add-recipe-page{max-width:1200px;width:100%;margin:0 auto;padding-top:24px}
+.recipe-form-page{width:100%;max-width:1100px;margin:0 auto;padding:24px;background:#fffefa;border:1px solid var(--line,#e6e8e2);border-radius:18px}
+@media(max-width:700px){.recipe-form-page{padding:15px}.add-recipe-page{padding-left:12px;padding-right:12px}}
+.history-custom-edit{display:grid;grid-template-columns:repeat(4,minmax(80px,1fr));gap:8px;margin-top:10px}
+.history-custom-edit label{display:flex;flex-direction:column;gap:5px;color:#71806c;font-size:11px}
+.history-custom-edit input{min-width:0;width:100%;padding:7px;border:1px solid #dfe5d8;border-radius:8px;font:inherit}
+@media(max-width:600px){.history-custom-edit{grid-template-columns:repeat(2,minmax(80px,1fr))}}
