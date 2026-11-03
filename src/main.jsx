@@ -207,13 +207,18 @@ function dbNutritionForQuantity(entry, qty, unit) {
 }
 function ingredientNutritionRates(ingredient,fallback){
  const stored=ingredient.slice(11,15);
- if(stored.length===4&&stored.every(v=>Number.isFinite(Number(v))))return stored.map(Number);
+ const hasStoredRates=stored.length===4&&stored.every(v=>Number.isFinite(Number(v))),storedRates=hasStoredRates?stored.map(Number):null;
+ const fallbackQty=Number(fallback?.[1])||0,fallbackRates=fallbackQty?[3,4,5,6].map(column=>(Number(fallback[column])||0)/fallbackQty):null;
+ // Some older saves recorded four zero rates after an ingredient quantity
+ // reached zero. Treat those as lost data when the seeded recipe has values.
+ if(hasStoredRates&&(storedRates.some(value=>value>0)||!fallbackRates?.some(value=>value>0)))return storedRates;
+ if(fallbackRates?.some(value=>value>0))return fallbackRates;
  const hasCurrentNutrition=[3,4,5,6].some(column=>(Number(ingredient[column])||0)>0),source=Number(ingredient[1])>0&&(hasCurrentNutrition||!fallback)?ingredient:(fallback&&Number(fallback[1])>0?fallback:ingredient),qty=Number(source?.[1])||0;
  return [3,4,5,6].map(column=>qty?(Number(source[column])||0)/qty:0);
 }
 function withIngredientNutritionRates(ingredient,fallback){const next=[...ingredient],rates=ingredientNutritionRates(ingredient,fallback);rates.forEach((rate,index)=>next[11+index]=rate);return next;}
 function scaleIngredientToQuantity(ingredient,quantity,fallback){const next=withIngredientNutritionRates(ingredient,fallback),qty=Math.max(0,Number(quantity)||0);next[1]=qty;[3,4,5,6].forEach((column,index)=>next[column]=Math.round(next[11+index]*qty*100)/100);return next;}
-function normalizeRecipeNutrition(recipe,fallbackRecipe){return {...recipe,ingredients:recipe.ingredients.map(ingredient=>{const fallback=fallbackRecipe?.ingredients?.find(item=>item[0]===ingredient[0]),hasStoredRates=ingredient.slice(11,15).length===4&&ingredient.slice(11,15).every(value=>Number.isFinite(Number(value))),normalized=withIngredientNutritionRates(ingredient,fallback),lostNutrition=!hasStoredRates&&Number(ingredient[1])>0&&[3,4,5,6].every(column=>(Number(ingredient[column])||0)===0)&&fallback&&[3,4,5,6].some(column=>(Number(fallback[column])||0)>0);return lostNutrition?scaleIngredientToQuantity(normalized,ingredient[1]):normalized;})}}
+function normalizeRecipeNutrition(recipe,fallbackRecipe){return {...recipe,ingredients:recipe.ingredients.map(ingredient=>{const fallback=fallbackRecipe?.ingredients?.find(item=>item[0]===ingredient[0]),normalized=withIngredientNutritionRates(ingredient,fallback),lostNutrition=Number(ingredient[1])>0&&[3,4,5,6].every(column=>(Number(ingredient[column])||0)===0)&&fallback&&[3,4,5,6].some(column=>(Number(fallback[column])||0)>0)&&normalized.slice(11,15).some(value=>Number(value)>0);return lostNutrition?scaleIngredientToQuantity(normalized,ingredient[1]):normalized;})}}
 function recipeNutritionForQuantities(recipe,quantities){const ingredients=recipe.ingredients.map((ingredient,index)=>scaleIngredientToQuantity(ingredient,quantities[index]??ingredient[1],seed.find(item=>item.id===recipe.id)?.ingredients.find(item=>item[0]===ingredient[0])));return {kcal:ingredients.reduce((sum,item)=>sum+(Number(item[3])||0),0),protein:ingredients.reduce((sum,item)=>sum+(Number(item[4])||0),0),carbs:ingredients.reduce((sum,item)=>sum+(Number(item[5])||0),0),fiber:ingredients.reduce((sum,item)=>sum+ingredientFiber(item),0)};}
 const clone = x => JSON.parse(JSON.stringify(x));
 function getVideoEmbedUrl(url="") { try { const u=new URL(url); const host=u.hostname.replace("www.",""); if(host==="youtu.be") return `https://www.youtube.com/embed/${u.pathname.slice(1)}`; if(host.includes("youtube.com")){const id=u.searchParams.get("v")||u.pathname.match(/\/(?:shorts|embed)\/([^/?]+)/)?.[1];return id?`https://www.youtube.com/embed/${id}`:null;} if(host.includes("vimeo.com")){const id=u.pathname.split("/").filter(Boolean).pop();return id?`https://player.vimeo.com/video/${id}`:null;} return null;}catch{return null;} }
