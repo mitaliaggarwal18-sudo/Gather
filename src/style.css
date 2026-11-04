@@ -804,6 +804,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .field-inline-editor{display:flex;align-items:center;gap:6px;margin:8px 0;flex-wrap:wrap}
 .field-inline-editor input,.field-inline-editor select,.field-inline-editor textarea{border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--surface);color:var(--text);font:inherit;max-width:100%}
 .field-inline-editor input{min-width:100px}.ingredient-editor input:first-child{min-width:150px}.step-editor textarea{min-width:min(420px,70vw);min-height:75px}
+.ingredient-delete{margin-left:2px;padding:2px;min-width:22px;min-height:22px}
 .cover-pencil,.step-photo-pencil{position:absolute;z-index:3;display:inline-flex;align-items:center;justify-content:center;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:7px;cursor:pointer;color:var(--text)}
 .detailphoto{position:relative}.cover-pencil{right:12px;top:12px}.cover-pencil input,.step-photo-pencil input{display:none}.step-photo-pencil{position:relative;margin-left:8px}
 
