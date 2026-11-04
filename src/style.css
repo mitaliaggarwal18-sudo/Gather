@@ -271,6 +271,9 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 }
 .panelhead { display:flex;align-items:center;justify-content:space-between;gap:10px; }
 .ingredient-panel-actions { display:flex;align-items:center;gap:12px; }
+.ingredient-add-row input,.ingredient-add-row select { min-width:0;width:100%;border:1px solid #e6e8dc;border-radius:9px;padding:9px 10px;background:#fff;color:#354234;font:inherit; }
+.ingredient-add-quantity,.ingredient-add-actions { display:flex;align-items:center;gap:6px; }
+.ingredient-add-row small { color:#77836f;line-height:1.4; }
 .panelhead h2 { font-size:21px; }
 .muted,.hint { color:#92998b;font-size:10px; }
 .hint { line-height:1.6; }
