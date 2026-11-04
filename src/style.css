@@ -684,17 +684,31 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
  padding:8px 4px;font-size:10px;color:#465342;
 }
 .ingredient-edit .nutrition-source-tag { grid-column:1/-1;margin-top:0; }
+.ingredient-edit { grid-template-columns:minmax(160px,1.7fr) 58px 72px 65px 70px 70px 65px 36px; }
+.ingredient-autocomplete { position:relative;z-index:8;min-width:0;width:100%; }
+.ingredient-autocomplete input { width:100%;min-width:0;border:1px solid #e5e8de;border-radius:7px;background:#fff;padding:8px 9px;font-size:11px;color:#465342; }
+.ingredient-autocomplete-list { position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:30;max-height:220px;overflow:auto;padding:4px;background:#fff;border:1px solid #dfe5d9;border-radius:10px;box-shadow:0 10px 28px #263b2626; }
+.ingredient-autocomplete-option { display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:8px 9px;border:0;border-radius:7px;background:#fff;color:#354234;text-align:left;cursor:pointer; }
+.ingredient-autocomplete-option:hover,.ingredient-autocomplete-option.active { background:#eff3e9; }
+.ingredient-autocomplete-option span { font-size:11px;font-weight:650; }
+.ingredient-autocomplete-option small { color:#75816f;font-size:9px;white-space:nowrap; }
+.ingredient-edit > .linkbtn,.ingredient-edit > .ai-assist-note { grid-column:1/-1; }
+.detail-ingredient-autocomplete { width:min(260px,70vw); }
+.detail-ingredient-autocomplete input { min-width:170px; }
 @media(max-width:900px) {
- .ingredient-edit { grid-template-columns:minmax(130px,1.4fr) minmax(140px,1.3fr) 55px 65px 58px 58px 58px 58px 35px 25px; }
+ .ingredient-edit { grid-template-columns:minmax(140px,1fr) 55px 65px 58px 58px 58px 58px 35px; }
 }
 @media(max-width:640px) {
  .home-recipe-heading { align-items:flex-start; }
  .home-recipe-heading h1 { font-size:29px; }
  .ingredient-edit-head { display:none; }
- .ingredient-edit { grid-template-columns:minmax(110px,1fr) minmax(120px,1fr) 60px 70px; }
+ .ingredient-edit { grid-template-columns:minmax(110px,1fr) 60px 70px 36px; }
+ .ingredient-edit .ingredient-name-autocomplete { grid-column:1/-1; }
  .ingredient-unit-select { grid-column:auto; }
  .ingredient-edit .nutrition-source-tag { grid-column:1/-1; }
 }
+
+.ingredient-editor .detail-ingredient-autocomplete { width:min(260px,70vw); }
 
 .person-cart-section{padding:12px 0 15px;border-bottom:1px solid #e9eadf}.person-cart-heading{display:flex;justify-content:space-between;align-items:center;margin:0 0 8px;padding:8px 10px;background:#eef2e9;border-radius:8px;color:#526b50}.person-cart-heading b{font-size:13px}.person-cart-heading span{font-size:10px}.cart-qty{width:48px;padding:4px 2px;text-align:center;border:1px solid #e5e8de;border-radius:5px;font-size:11px}.remove-food{border:0;background:transparent;color:#a47770}.add-food-inline{display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:7px 10px;border:1px dashed #aebaa5;border-radius:7px;background:#fbfcf8;color:#526b50;font-size:10px}.outside-food-cta{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;margin-top:12px;border-top:1px solid #eceee5}.outside-food-cta b,.outside-food-cta small{display:block}.outside-food-cta b{font-size:12px;color:#526b50}.outside-food-cta small{font-size:10px;color:#92998d;margin-top:4px}.person-picker-modal{max-width:420px}.person-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}.person-choice-grid button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px 10px;border:1px solid #e5e8de;border-radius:12px;background:#fbfcf8;color:#526b50}.person-choice-grid button span{font-size:28px}.person-choice-grid button b{font-size:14px}.person-choice-grid button small{font-size:10px;color:#92998d}.person-picker-modal>.softbtn{width:100%;justify-content:center}
 
