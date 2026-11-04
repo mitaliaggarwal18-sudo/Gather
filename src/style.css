@@ -993,8 +993,8 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .food-error p{margin:0}
 @media(max-width:900px){.recipe-workspace-single.with-builder{grid-template-columns:1fr}.pantry-context{align-items:flex-start}.pantry-need{flex-wrap:wrap}}
 @media(max-width:600px){.history-order-head,.history-order-foot{padding:14px}.history-items{padding:0 14px}.history-order-head>strong{font-size:16px}.pantry-need{align-items:flex-start}.pantry-need>label{width:100%;justify-content:space-between}.pantry-shortage,.pantry-ready{width:100%}.pantry-add-form input:first-child{min-width:100%}.recipe-voice-panel>div:last-of-type,.manual-food-actions{flex-direction:column}.recipe-voice-panel button,.manual-food-actions button{width:100%}}
-.add-recipe-page{max-width:1200px;width:100%;margin:0 auto;padding-top:24px}
-.recipe-form-page{width:100%;max-width:1100px;margin:0 auto;padding:24px;background:#fffefa;border:1px solid var(--line,#e6e8e2);border-radius:18px}
+.add-recipe-page{max-width:1500px;width:100%;margin:0 auto;padding-top:24px}
+.recipe-form-page{width:100%;max-width:none;margin:0;padding:24px;background:#fffefa;border:1px solid var(--line,#e6e8e2);border-radius:18px}
 @media(max-width:700px){.recipe-form-page{padding:15px}.add-recipe-page{padding-left:12px;padding-right:12px}}
 .history-custom-edit{display:grid;grid-template-columns:repeat(4,minmax(80px,1fr));gap:8px;margin-top:10px}
 .history-custom-edit label{display:flex;flex-direction:column;gap:5px;color:#71806c;font-size:11px}
