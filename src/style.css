@@ -270,6 +270,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
   border-radius:13px;padding:18px;min-width:0;
 }
 .panelhead { display:flex;align-items:center;justify-content:space-between;gap:10px; }
+.ingredient-panel-actions { display:flex;align-items:center;gap:12px; }
 .panelhead h2 { font-size:21px; }
 .muted,.hint { color:#92998b;font-size:10px; }
 .hint { line-height:1.6; }
