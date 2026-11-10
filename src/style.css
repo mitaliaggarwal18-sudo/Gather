@@ -1042,3 +1042,4 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
  .toast{bottom:88px}
 }
 .planner-summary-add-food{width:100%;justify-content:center;margin:8px 0 12px}
+.planner-meal-summary,.meal-summary{scroll-margin-top:18px}
