@@ -1,3 +1,4 @@
+import { requireGatherUser } from "./_auth.js";
 const schema = {
   type: "object", additionalProperties: false,
   properties: {
@@ -6,6 +7,7 @@ const schema = {
 };
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
+  if (!await requireGatherUser(req, res)) return;
   const apiKey = process.env.OpenAI_API_Key || process.env.OPENAI_API_KEY;
   if (!apiKey) return res.status(503).json({ error: "AI is not configured. Check the OpenAI API key environment variable in Vercel." });
   const name = typeof req.body?.name === "string" ? req.body.name.trim() : "";
@@ -32,3 +34,4 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Food estimate failed. Please try again." });
   }
 }
+import { requireGatherUser } from "./_auth.js";
