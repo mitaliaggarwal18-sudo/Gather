@@ -1,3 +1,4 @@
+import { requireGatherUser } from "./_auth.js";
 const ingredientSchema = {
   type: "object",
   additionalProperties: false,

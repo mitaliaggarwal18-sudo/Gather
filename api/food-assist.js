@@ -1,3 +1,4 @@
+import { requireGatherUser } from "./_auth.js";
 const schema = {
   type: "object", additionalProperties: false,
   properties: {
