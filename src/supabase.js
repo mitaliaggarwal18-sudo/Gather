@@ -47,6 +47,20 @@ const dataVersions = new Map();
 const saveQueues = new Map();
 const mediaBucket = "gather-recipe-media";
 
+function stableImageReference(value) {
+  if (!value) return null;
+  if (value.startsWith("storage://")) return value;
+  try {
+    const url = new URL(value);
+    for (const access of ["sign", "public"]) {
+      const marker = `/storage/v1/object/${access}/${mediaBucket}/`;
+      const index = url.pathname.indexOf(marker);
+      if (index >= 0) return `storage://${decodeURIComponent(url.pathname.slice(index + marker.length))}`;
+    }
+  } catch {}
+  return value;
+}
+
 async function signedImage(value) {
   if (!value?.startsWith("storage://")) return value || "";
   const path=value.slice("storage://".length);
@@ -56,7 +70,7 @@ async function signedImage(value) {
 }
 
 async function storeImage(userId,recipeId,slot,value) {
-  if(!value?.startsWith("data:image/"))return value||null;
+  if(!value?.startsWith("data:image/"))return stableImageReference(value);
   const response=await fetch(value),blob=await response.blob(),mime=blob.type||"image/jpeg";
   const extension=({"image/jpeg":"jpg","image/png":"png","image/webp":"webp","image/gif":"gif"})[mime]||"jpg";
   const path=`${userId}/${encodeURIComponent(recipeId)}/${slot}.${extension}`;
