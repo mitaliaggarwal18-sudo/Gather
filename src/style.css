@@ -513,6 +513,12 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
   display:flex;justify-content:flex-end;gap:8px;margin-top:16px;
   position:sticky;bottom:0;background:#fffefa;padding-top:10px;
 }
+.share-recipe-image {
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:42px;padding:0 15px;border:1px solid #dfe5d9;border-radius:10px;
+  background:#f1f4ec;color:#536d50;font:inherit;font-weight:700;cursor:pointer;
+}
+.share-recipe-image:disabled { opacity:.65;cursor:wait; }
 .ingredient-photo-upload {
   width:34px;height:34px;border:1px dashed #b9c5b2;
   border-radius:7px;display:grid;place-items:center;
