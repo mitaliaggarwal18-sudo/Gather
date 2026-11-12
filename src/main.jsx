@@ -238,7 +238,8 @@ function App(){
  const [recipePrompt,setRecipePrompt]=useState(""),[recipeAssistLoading,setRecipeAssistLoading]=useState(false),[dictationListening,setDictationListening]=useState(false),[foodAssistLoading,setFoodAssistLoading]=useState(false);
  const dictationRecorder=useRef(null),dictationChunks=useRef([]);
  const [form,setForm]=useState(null),[inlineEdit,setInlineEdit]=useState(false),[inlineDraft,setInlineDraft]=useState(null),[fieldEdit,setFieldEdit]=useState(null),[coverAdjustOpen,setCoverAdjustOpen]=useState(false),[fieldValue,setFieldValue]=useState(""),[ingredientDraft,setIngredientDraft]=useState(null),[stepDraft,setStepDraft]=useState(null),[toast,setToast]=useState(""),[builderOpen,setBuilderOpen]=useState(false),[recipePaneOpen,setRecipePaneOpen]=useState(true),[cookMode,setCookMode]=useState(false),[shareLoading,setShareLoading]=useState(false),[savingMeals,setSavingMeals]=useState(false);
- const [detailIngredientLoading,setDetailIngredientLoading]=useState(false);\n const [catalogSavingIndex,setCatalogSavingIndex]=useState(null);
+ const [detailIngredientLoading,setDetailIngredientLoading]=useState(false);
+ const [catalogSavingIndex,setCatalogSavingIndex]=useState(null);
  const [expandedPerson,setExpandedPerson]=useState(null),[latestMealPerson,setLatestMealPerson]=useState("Mitali"),[latestCartMode,setLatestCartMode]=useState("meal"),[showOutsideFood,setShowOutsideFood]=useState(false),[outsideFoods,setOutsideFoods]=useState([]);
  const plannerMealSummaryRef=useRef(null),mealBuilderSummaryRef=useRef(null);
  const [pendingFoodMember,setPendingFoodMember]=useState("Mitali"),[foodQuery,setFoodQuery]=useState(""),[foodResults,setFoodResults]=useState([]),[foodLoading,setFoodLoading]=useState(false),[foodError,setFoodError]=useState(""),[selectedFood,setSelectedFood]=useState(null),[foodQuantity,setFoodQuantity]=useState("1");
