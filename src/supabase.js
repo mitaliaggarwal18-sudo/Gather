@@ -46,7 +46,8 @@ export function mergeState(key, cloudValue, localValue) {
 const dataVersions = new Map();
 const saveQueues = new Map();
 const cloudSnapshots = new Map();
-const sameValue = (a,b) => JSON.stringify(a) === JSON.stringify(b);
+const normalizeForCompare=value=>typeof value==="string"?stableImageReference(value):Array.isArray(value)?value.map(normalizeForCompare):value&&typeof value==="object"?Object.fromEntries(Object.entries(value).map(([key,item])=>[key,normalizeForCompare(item)])):value;
+const sameValue = (a,b) => JSON.stringify(normalizeForCompare(a)) === JSON.stringify(normalizeForCompare(b));
 function mergeById(base, local, remote, identify) {
   const before = new Map((base || []).map(item => [identify(item), item]));
   const ours = new Map((local || []).map(item => [identify(item), item]));
