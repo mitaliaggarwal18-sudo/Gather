@@ -1084,3 +1084,50 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .food-result-inline-add>small { max-width:110px;color:#77836f;font-size:10px; }
 .food-result-inline-add .primary { padding:9px 12px;font-size:11px;white-space:nowrap; }
 @media(max-width:640px) { .food-result-wrap { grid-template-columns:1fr; }.food-result-inline-add { justify-content:flex-end;padding:0 4px 4px; }.food-result-inline-add>small { flex:1;max-width:none; } }
+
+/* Phone-first ingredient quantity editing */
+@media (max-width: 640px) {
+  .ingredient-editor {
+    grid-template-columns: minmax(115px, 1fr) minmax(100px, 1fr) 44px 44px !important;
+    gap: 8px !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+  .ingredient-editor > .detail-ingredient-autocomplete {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  .ingredient-editor > .detail-ingredient-autocomplete input {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 48px !important;
+    font-size: 16px !important;
+  }
+  .ingredient-editor > input[aria-label="Quantity"] {
+    grid-column: 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 48px !important;
+    padding: 10px 12px !important;
+    font-size: 16px !important;
+    box-sizing: border-box !important;
+  }
+  .ingredient-editor > select[aria-label="Unit"] {
+    grid-column: 2 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 48px !important;
+    padding: 10px 8px !important;
+    font-size: 16px !important;
+    box-sizing: border-box !important;
+  }
+  .ingredient-editor > .iconbtn[title="Save"] { grid-column: 3 !important; min-width: 44px !important; min-height: 44px !important; }
+  .ingredient-editor > .iconbtn[title="Cancel"] { grid-column: 4 !important; min-width: 44px !important; min-height: 44px !important; }
+  .ingredient-editor > .manual-catalog-editor {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
