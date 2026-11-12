@@ -378,7 +378,7 @@ async function shareRecipeImage(recipe){setShareLoading(true);try{const blob=awa
    const row={id,name:cleanName,kcal_per_100g:values.kcal,protein_per_100g:values.protein,carbs_per_100g:values.carbs,fibre_per_100g:values.fibre,source:"user entered",estimated:false,created_by:cloudUser.id,updated_at:new Date().toISOString()};
    const {data,error}=await supabase.from("gather_ingredient_catalog").insert(row).select("*").single();
    if(error)throw new Error(error.code==="42501"?"The database is not yet allowing ingredient additions. Reload after the Gather update finishes.":error.message||"Could not save ingredient to the database.");
-   const entry={id:data.id,name:data.name,kcal:Number(data.kcal_per_100g),p:Number(data.protein_per_100g),c:Number(data.carbs_per_100g),f:Number(data.fibre_per_100g)
+   const entry={id:data.id,name:data.name,kcal:Number(data.kcal_per_100g),p:Number(data.protein_per_100g),c:Number(data.carbs_per_100g),f:Number(data.fibre_per_100g),createdBy:data.created_by};
    INGREDIENT_DB.push(entry);
    return entry;
  }
