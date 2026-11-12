@@ -191,8 +191,9 @@ function compressStepImage(file){return new Promise((resolve,reject)=>{if(!file|
 function compressCoverImage(file){return new Promise((resolve,reject)=>{if(!file||!file.type.startsWith("image/")){reject(new Error("Choose an image file"));return;}const reader=new FileReader();reader.onerror=()=>reject(new Error("Could not read image"));reader.onload=()=>{const img=new Image();img.onerror=()=>reject(new Error("Could not open image"));img.onload=()=>{const maxW=1000,maxH=700,scale=Math.min(1,maxW/img.width,maxH/img.height),canvas=document.createElement("canvas");canvas.width=Math.max(1,Math.round(img.width*scale));canvas.height=Math.max(1,Math.round(img.height*scale));canvas.getContext("2d").drawImage(img,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL("image/jpeg",0.78));};img.src=reader.result;};reader.readAsDataURL(file);});}
 function wrapCanvasText(ctx,text,maxWidth){const words=String(text||"").split(/\s+/).filter(Boolean),lines=[];let line="";for(const word of words){const next=line?line+" "+word:word;if(line&&ctx.measureText(next).width>maxWidth){lines.push(line);line=word;}else line=next;}if(line)lines.push(line);return lines;}
 async function makeRecipeShareImage(recipe){
- const width=1080,pad=72,inner=width-pad*2,temp=document.createElement("canvas");temp.width=width;temp.height=7000;const ctx=temp.getContext("2d");if(!ctx)throw new Error("Could not create the recipe image.");
- let cover=null;if(recipe.coverImage){cover=await new Promise(resolve=>{const img=new Image();if(!String(recipe.coverImage).startsWith("data:"))img.crossOrigin="anonymous";img.onload=()=>resolve(img);img.onerror=()=>resolve(null);img.src=recipe.coverImage;});}
+ const width=1080,pad=72,inner=width-pad*2,temp=document.createElement("canvas");temp.width=width;temp.height=12000;const ctx=temp.getContext("2d");if(!ctx)throw new Error("Could not create the recipe image.");
+ const loadImage=source=>source?new Promise(resolve=>{const img=new Image();if(!String(source).startsWith("data:"))img.crossOrigin="anonymous";img.onload=()=>resolve(img);img.onerror=()=>resolve(null);img.src=source;}):Promise.resolve(null);
+ const cover=await loadImage(recipe.coverImage),stepPictures=await Promise.all((recipe.steps||[]).map((_,i)=>loadImage(Array.isArray(recipe.stepImages)?recipe.stepImages[i]:recipe.stepImages?.[i])));
  let y=0;const rounded=(x,top,w,h,r,fill)=>{ctx.beginPath();ctx.roundRect(x,top,w,h,r);ctx.fillStyle=fill;ctx.fill();};
  const text=(value,x,top,font,color,maxWidth,lineHeight)=>{ctx.font=font;ctx.fillStyle=color;for(const line of wrapCanvasText(ctx,value,maxWidth)){ctx.fillText(line,x,top);top+=lineHeight;}return top;};
  ctx.fillStyle="#f7f6ef";ctx.fillRect(0,0,width,temp.height);y=68;
@@ -204,7 +205,17 @@ async function makeRecipeShareImage(recipe){
  ctx.font="700 36px Georgia, serif";ctx.fillStyle="#303a30";ctx.fillText("Ingredients",pad,y);y+=50;
  ctx.font="22px Arial";for(const item of recipe.ingredients){const label=`•  ${item[0]} — ${item[1]} ${item[2]||""}`;y=text(label,pad+8,y,"22px Arial","#465342",inner-20,31)+7;}y+=26;
  ctx.font="700 36px Georgia, serif";ctx.fillStyle="#303a30";ctx.fillText("Method",pad,y);y+=52;
- for(let i=0;i<recipe.steps.length;i++){const lines=wrapCanvasText(ctx,recipe.steps[i],inner-68),blockH=Math.max(76,lines.length*31+34);rounded(pad,y,inner,blockH,16,"#fffefa");ctx.fillStyle="#526b50";ctx.beginPath();ctx.arc(pad+34,y+34,20,0,Math.PI*2);ctx.fill();ctx.fillStyle="#fff";ctx.font="700 19px Arial";ctx.textAlign="center";ctx.fillText(String(i+1),pad+34,y+41);ctx.textAlign="left";let lineY=y+38;for(const line of lines){ctx.font="21px Arial";ctx.fillStyle="#465342";ctx.fillText(line,pad+70,lineY);lineY+=31;}y+=blockH+12;}y+=12;
+ for(let i=0;i<(recipe.steps||[]).length;i++){
+  const image=stepPictures[i],imageH=420,captionLines=wrapCanvasText(ctx,recipe.steps[i],inner-80),blockH=imageH+Math.max(96,captionLines.length*38+58);
+  rounded(pad,y,inner,blockH,22,"#fffefa");
+  const imageTop=y+18,imageX=pad+18,imageW=inner-36,imageBoxH=imageH-18;
+  rounded(imageX,imageTop,imageW,imageBoxH,16,"#e9eee4");
+  if(image){const scale=Math.max(imageW/image.width,imageBoxH/image.height),dw=image.width*scale,dh=image.height*scale,dx=imageX+(imageW-dw)/2,dy=imageTop+(imageBoxH-dh)/2;ctx.save();ctx.beginPath();ctx.roundRect(imageX,imageTop,imageW,imageBoxH,16);ctx.clip();ctx.drawImage(image,dx,dy,dw,dh);ctx.restore();}
+  else{text("Add a photo for this step",imageX+24,imageTop+imageBoxH/2,"24px Arial","#74806f",imageW-48,32);}
+  ctx.fillStyle="#526b50";ctx.beginPath();ctx.arc(pad+42,y+imageH+41,24,0,Math.PI*2);ctx.fill();ctx.fillStyle="#fff";ctx.font="700 22px Arial";ctx.textAlign="center";ctx.fillText(String(i+1),pad+42,y+imageH+49);ctx.textAlign="left";
+  let lineY=y+imageH+48;for(const line of captionLines){ctx.font="27px Arial";ctx.fillStyle="#303a30";ctx.fillText(line,pad+84,lineY);lineY+=38;}
+  y+=blockH+18;
+ }y+=12;
  ctx.font="600 18px Arial";ctx.fillStyle="#84907f";ctx.fillText("Made with Gather  ·  Eat well, simply",pad,y);y+=54;
  const output=document.createElement("canvas");output.width=width;output.height=y;const out=output.getContext("2d");if(!out)throw new Error("Could not finish the recipe image.");out.drawImage(temp,0,0);const blob=await new Promise(resolve=>output.toBlob(resolve,"image/png"));if(!blob)throw new Error("Could not export the recipe image.");return blob;
 }
