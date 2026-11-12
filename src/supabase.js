@@ -150,7 +150,8 @@ const rowsToRecipe = async (row, ingredients, steps) => ({
     await signedImage(i.photo), i.nutrition_source, i.verified, i.catalog_id, i.kcal_per_unit, i.protein_per_unit, i.carbs_per_unit, i.fibre_per_unit,
   ])),
   steps: steps.sort((a,b)=>a.position-b.position).map(s=>s.instruction),
-  stepImages: Object.fromEntries(await Promise.all(steps.filter(s=>s.image).map(async s=>[s.position,await signedImage(s.image)]))),
+  // The editor models step photos as an array aligned with steps; map normalized DB rows back to that shape.
+  stepImages: await Promise.all(steps.sort((a,b)=>a.position-b.position).map(async s=>await signedImage(s.image))),
 });
 
 export async function loadGatherData(userId) {
