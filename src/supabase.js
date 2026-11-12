@@ -155,7 +155,7 @@ const rowsToRecipe = async (row, ingredients, steps) => ({
 });
 
 export async function loadGatherData(userId) {
-  const tables = ["gather_recipes","gather_recipe_ingredients","gather_recipe_steps","gather_daily_plan_items","gather_saved_meals","gather_saved_meal_items","gather_current_meal_items","gather_pantry_items","gather_user_settings","gather_user_data_versions","gather_ingredient_catalog","gather_ingredient_aliases"];
+  const tables = ["gather_recipes","gather_recipe_ingredients","gather_recipe_steps","gather_daily_plan_items","gather_saved_meals","gather_saved_meal_items","gather_current_meal_items","gather_pantry_items","gather_user_settings","gather_user_data_versions","gather_ingredient_catalog","gather_ingredient_aliases","gather_manual_foods"];
   const results = await Promise.all(tables.map(table=>table.startsWith("gather_ingredient_")?supabase.from(table).select("*"):supabase.from(table).select("*").eq("user_id",userId)));
   const byTable = Object.fromEntries(results.map((result,index)=>[tables[index],result]));
   for (const table of tables) if (byTable[table]?.error) throw byTable[table].error;
@@ -173,7 +173,7 @@ export async function loadGatherData(userId) {
   const settings=read("gather_user_settings").find(x=>x.setting_key==="calorie-goals")?.setting_value || {Mitali:1600,Abhinav:2000};
   dataVersions.set(userId,Number(read("gather_user_data_versions")[0]?.version)||0);
   const pantryStock=Object.fromEntries(read("gather_pantry_items").map(i=>[i.item_id,{...i.details,name:i.name,quantity:Number(i.quantity)||0,unit:i.unit||"g"}]));
-  const state={recipes,dailyPlans,savedMeals,currentMeal,pantryStock,calorieGoals:settings,ingredientCatalog:byTable.gather_ingredient_catalog?.data||[],ingredientAliases:byTable.gather_ingredient_aliases?.data||[]};
+  const state={recipes,dailyPlans,savedMeals,currentMeal,pantryStock,calorieGoals:settings,ingredientCatalog:byTable.gather_ingredient_catalog?.data||[],ingredientAliases:byTable.gather_ingredient_aliases?.data||[],manualFoods:read("gather_manual_foods")};
   cloudSnapshots.set(userId,{recipes,dailyPlans,savedMeals,currentMeal,pantryStock,calorieGoals:settings});
   return state;
 }
