@@ -45,6 +45,55 @@ export function mergeState(key, cloudValue, localValue) {
 
 const dataVersions = new Map();
 const saveQueues = new Map();
+const cloudSnapshots = new Map();
+const sameValue = (a,b) => JSON.stringify(a) === JSON.stringify(b);
+function mergeById(base, local, remote, identify) {
+  const before = new Map((base || []).map(item => [identify(item), item]));
+  const ours = new Map((local || []).map(item => [identify(item), item]));
+  const theirs = new Map((remote || []).map(item => [identify(item), item]));
+  const result = [];
+  for (const id of new Set([...before.keys(), ...ours.keys(), ...theirs.keys()])) {
+    const b=before.get(id), l=ours.get(id), r=theirs.get(id);
+    if (l === undefined) { if (r !== undefined && (b === undefined || !sameValue(r,b))) result.push(r); continue; }
+    if (r === undefined) { if (b === undefined || !sameValue(l,b)) result.push(l); continue; }
+    result.push(mergeConcurrentValue(b,l,r));
+  }
+  return result;
+}
+function mergeConcurrentValue(base, local, remote) {
+  if (sameValue(local,base)) return remote;
+  if (sameValue(remote,base)) return local;
+  if (local == null || remote == null) return local;
+  if (Array.isArray(local) && Array.isArray(remote)) {
+    const keyOf=item=>item&&typeof item==="object"?(item.uid??item.id??item[0]):null;
+    if ([...local,...remote].every(item=>keyOf(item)!=null)) return mergeById(Array.isArray(base)?base:[],local,remote,keyOf);
+    if (local.length===remote.length) return local.map((item,index)=>mergeConcurrentValue(base?.[index],item,remote[index]));
+    return local;
+  }
+  if (typeof local === "object" && typeof remote === "object") {
+    const result={};
+    for(const key of new Set([...Object.keys(base||{}),...Object.keys(local),...Object.keys(remote)])){
+      const value=mergeConcurrentValue(base?.[key],local[key],remote[key]);
+      if(value!==undefined)result[key]=value;
+    }
+    return result;
+  }
+  return local;
+}
+function mergeConcurrentState(base, local, remote) {
+  const merged={...remote,...local};
+  merged.recipes=mergeById(base?.recipes,local.recipes,remote.recipes,item=>item.id);
+  merged.savedMeals=mergeById(base?.savedMeals,local.savedMeals,remote.savedMeals,item=>item.id);
+  merged.currentMeal=mergeById(base?.currentMeal,local.currentMeal,remote.currentMeal,item=>`${item.id}|${item.member||"Mitali"}|${item.variant||""}`);
+  const dateKeys=new Set([...Object.keys(base?.dailyPlans||{}),...Object.keys(local.dailyPlans||{}),...Object.keys(remote.dailyPlans||{})]);
+  merged.dailyPlans={};
+  for(const key of dateKeys) merged.dailyPlans[key]=mergeById(base?.dailyPlans?.[key],local.dailyPlans?.[key],remote.dailyPlans?.[key],item=>item.uid);
+  merged.pantryStock=mergeConcurrentValue(base?.pantryStock,local.pantryStock,remote.pantryStock);
+  merged.calorieGoals=mergeConcurrentValue(base?.calorieGoals,local.calorieGoals,remote.calorieGoals);
+  return merged;
+}
+
+
 const mediaBucket = "gather-recipe-media";
 
 function stableImageReference(value) {
@@ -122,30 +171,44 @@ export async function loadGatherData(userId) {
   const settings=read("gather_user_settings").find(x=>x.setting_key==="calorie-goals")?.setting_value || {Mitali:1600,Abhinav:2000};
   dataVersions.set(userId,Number(read("gather_user_data_versions")[0]?.version)||0);
   const pantryStock=Object.fromEntries(read("gather_pantry_items").map(i=>[i.item_id,{...i.details,name:i.name,quantity:Number(i.quantity)||0,unit:i.unit||"g"}]));
-  return {recipes,dailyPlans,savedMeals,currentMeal,pantryStock,calorieGoals:settings,ingredientCatalog:byTable.gather_ingredient_catalog?.data||[],ingredientAliases:byTable.gather_ingredient_aliases?.data||[]};
+  const state={recipes,dailyPlans,savedMeals,currentMeal,pantryStock,calorieGoals:settings,ingredientCatalog:byTable.gather_ingredient_catalog?.data||[],ingredientAliases:byTable.gather_ingredient_aliases?.data||[]};
+  cloudSnapshots.set(userId,{recipes,dailyPlans,savedMeals,currentMeal,pantryStock,calorieGoals:settings});
+  return state;
 }
 
 export async function saveGatherData(userId, state) {
   const prior=saveQueues.get(userId)||Promise.resolve();
   const task=prior.catch(()=>{}).then(async()=>{
-    const recipes=await Promise.all(state.recipes.map(async r=>({
-      ...r,
-      coverImage:await storeImage(userId,r.id,"cover",r.coverImage),
-      stepImages:Object.fromEntries(await Promise.all(Object.entries(r.stepImages||{}).map(async([step,image])=>[step,await storeImage(userId,r.id,`step-${Number(step)+1}`,image)]))),
-      ingredients:await Promise.all((r.ingredients||[]).map(async(i,index)=>{const next=[...i];next[7]=await storeImage(userId,r.id,`ingredient-${index+1}`,i[7]);return next;})),
-    })));
-    const {data,error}=await supabase.rpc("save_gather_data",{
-      p_expected_version:dataVersions.get(userId)||0,
-      p_recipes:recipes,
-      p_daily_plans:state.dailyPlans,
-      p_saved_meals:state.savedMeals,
-      p_current_meal:state.currentMeal,
-      p_pantry:state.pantryStock,
-      p_calorie_goals:state.calorieGoals,
-    });
-    if(error)throw error;
-    dataVersions.set(userId,Number(data));
-    return Number(data);
+    let nextState={...state},attempt=0;
+    while(attempt<3){
+      const recipes=await Promise.all(nextState.recipes.map(async r=>({
+        ...r,
+        coverImage:await storeImage(userId,r.id,"cover",r.coverImage),
+        stepImages:Object.fromEntries(await Promise.all(Object.entries(r.stepImages||{}).map(async([step,image])=>[step,await storeImage(userId,r.id,`step-${Number(step)+1}`,image)]))),
+        ingredients:await Promise.all((r.ingredients||[]).map(async(i,index)=>{const next=[...i];next[7]=await storeImage(userId,r.id,`ingredient-${index+1}`,i[7]);return next;})),
+      })));
+      const {data,error}=await supabase.rpc("save_gather_data",{
+        p_expected_version:dataVersions.get(userId)||0,
+        p_recipes:recipes,
+        p_daily_plans:nextState.dailyPlans,
+        p_saved_meals:nextState.savedMeals,
+        p_current_meal:nextState.currentMeal,
+        p_pantry:nextState.pantryStock,
+        p_calorie_goals:nextState.calorieGoals,
+      });
+      if(!error){
+        dataVersions.set(userId,Number(data));
+        const savedState={...nextState,recipes};
+        cloudSnapshots.set(userId,savedState);
+        const displayRecipes=await Promise.all(recipes.map(async recipe=>({...recipe,coverImage:await signedImage(recipe.coverImage),stepImages:Object.fromEntries(await Promise.all(Object.entries(recipe.stepImages||{}).map(async([step,image])=>[step,await signedImage(image)]))),ingredients:await Promise.all(recipe.ingredients.map(async ingredient=>{const next=[...ingredient];next[7]=await signedImage(next[7]);return next;}))})));
+        return {...nextState,recipes:displayRecipes,cloudMerged:attempt>0};
+      }
+      if(error.code!=="40001"&& !/another device|version/i.test(error.message||""))throw error;
+      if(attempt===2)throw error;
+      const base=cloudSnapshots.get(userId)||{},remote=await loadGatherData(userId);
+      nextState=mergeConcurrentState(base,nextState,remote);
+      attempt++;
+    }
   });
   saveQueues.set(userId,task);
   task.finally(()=>{if(saveQueues.get(userId)===task)saveQueues.delete(userId)}).catch(()=>{});

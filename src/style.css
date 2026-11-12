@@ -1049,3 +1049,5 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 }
 .planner-summary-add-food{width:100%;justify-content:center;margin:8px 0 12px}
 .planner-meal-summary,.meal-summary{scroll-margin-top:18px}
+
+.screen-error{min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:16px;padding:48px max(24px,calc((100vw - 680px)/2));background:#f7f6ef;color:#303a30}.screen-error h1{font-family:Georgia,serif;font-size:clamp(40px,8vw,64px);margin:0}.screen-error p{color:#74806f;font-size:18px;line-height:1.6}
