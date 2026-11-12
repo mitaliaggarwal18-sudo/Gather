@@ -1,0 +1,1 @@
+create index if not exists gather_ingredient_catalog_created_by_idx\n  on public.gather_ingredient_catalog(created_by);\n
