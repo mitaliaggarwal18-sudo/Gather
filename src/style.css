@@ -1209,3 +1209,18 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
   .manual-food-panel { min-width:0; }
   .food-result-inline-add { flex-wrap:wrap; }
 }
+
+/* Portion chooser for planner recipe tiles. */
+.planner-portion-backdrop{position:fixed;inset:0;z-index:1000;background:#1c241bb8;display:grid;place-items:center;padding:18px}
+.planner-portion-dialog{position:relative;width:min(100%,480px);max-height:calc(100dvh - 36px);overflow:auto;background:#fffefa;border:1px solid #e8eadf;border-radius:22px;padding:30px;box-shadow:0 24px 80px #17201635}
+.planner-portion-dialog h2{font:600 28px/1.15 Georgia,serif;color:#303a30;margin:12px 34px 8px 0}
+.planner-portion-dialog>p{color:#758171;font-size:14px;line-height:1.5;margin:0 0 20px}
+.planner-portion-close{position:absolute;right:18px;top:18px}
+.planner-portion-modes{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
+.planner-portion-modes button{border:1px solid #e1e6d9;border-radius:12px;background:#f7f8f3;color:#62745c;padding:13px;font-weight:700;cursor:pointer}
+.planner-portion-modes button.active{background:#536f50;border-color:#536f50;color:white}
+.planner-portion-amount{display:grid;gap:7px;margin:14px 0;color:#50634a;font-size:13px;font-weight:700}
+.planner-portion-amount input{width:100%;min-height:48px;padding:10px 13px;border:1px solid #dfe5d8;border-radius:11px;background:white;color:#303a30;font-size:17px;font-weight:600}
+.planner-portion-amount small{font-size:12px;line-height:1.45;color:#7a8675;font-weight:400}
+.planner-portion-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:22px}
+@media(max-width:560px){.planner-portion-backdrop{padding:12px;align-items:end}.planner-portion-dialog{padding:25px 20px calc(20px + env(safe-area-inset-bottom));border-radius:20px 20px 14px 14px;max-height:88dvh}.planner-portion-dialog h2{font-size:24px}.planner-portion-actions button{flex:1}}
